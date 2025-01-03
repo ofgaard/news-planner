@@ -1,7 +1,7 @@
 const prisma = require("../config/PrismaClient");
 
 const getAllFromDate = async (date) => {
-  const selectedDate = new Date(date);
+  const selectedDate = date ? new Date(date) : new Date();
 
   const startOfDay = new Date(selectedDate);
   startOfDay.setHours(0, 0, 0, 0);
@@ -28,6 +28,7 @@ const getAllFromDate = async (date) => {
     return stories;
   } catch (error) {
     console.log(error);
+    throw new Error("From Backend: Error fetching stories");
   }
 };
 

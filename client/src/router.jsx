@@ -1,7 +1,8 @@
 import { createBrowserRouter } from "react-router";
 import { Layout } from "./components/Layout";
 import { Error } from "./pages/Error";
-import { Day } from "./pages/Day";
+import { Today } from "./pages/Today";
+import { DayOverview } from "./components/DayOverview";
 
 export const router = createBrowserRouter([
   {
@@ -11,9 +12,12 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Day></Day>,
+        element: <DayOverview></DayOverview>,
       },
-      {},
+      {
+        path: "day/date:",
+        element: <DayOverview></DayOverview>,
+      },
     ],
   },
 ]);

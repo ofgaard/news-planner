@@ -2,7 +2,7 @@ import { GrArticle } from "react-icons/gr";
 import { CgUser } from "react-icons/cg";
 import { CiClock2 } from "react-icons/ci";
 
-export const Day = () => {
+export const Today = () => {
   return (
     <div className="flex flex-col px-10 py-10">
       {/* Today */}

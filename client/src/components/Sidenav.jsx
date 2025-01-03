@@ -8,6 +8,7 @@ import { CgSearch } from "react-icons/cg";
 import { CgCalendarToday } from "react-icons/cg";
 import { CgCalendarDates } from "react-icons/cg";
 import { PiUsersThree } from "react-icons/pi";
+import { fetchStoriesByDay } from "../services/api/Stories";
 
 export const Sidenav = () => {
   const [addFormVisible, setAddFormVisible] = useState(false);
@@ -55,7 +56,6 @@ export const Sidenav = () => {
           <MenuListItem content="Samfund"></MenuListItem>
         </ul>
       </div>
-
       <div>
         <MenuItem
           icon={PiUsersThree}
