@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
         element: <DayOverview></DayOverview>,
       },
       {
-        path: "day/date:",
+        path: "day/:date?",
         element: <DayOverview></DayOverview>,
       },
     ],

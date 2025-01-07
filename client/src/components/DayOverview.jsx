@@ -1,4 +1,5 @@
-import { useEffect, useState, useParams } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import { GrArticle } from "react-icons/gr";
 import { CgUser } from "react-icons/cg";
 import { CiClock2 } from "react-icons/ci";
@@ -8,12 +9,13 @@ import { Weekday } from "./UI/ShowWeekday";
 export const DayOverview = () => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { date } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const fetchedStories = await fetchStoriesByDay();
+        const fetchedStories = await fetchStoriesByDay(date);
         console.log(fetchedStories);
         setStories(fetchedStories);
       } catch (error) {
@@ -30,14 +32,10 @@ export const DayOverview = () => {
     return <p>Loading ... </p>;
   }
 
-  if (!stories || stories.length === 0) {
-    return <p>No stories available</p>;
-  }
-
   return (
     <div className="flex flex-col px-10 py-10">
       <div className="flex flex-col gap-1 mb-5">
-        <Weekday></Weekday>
+        <Weekday date={date}></Weekday>
         <div className="flex flex-row text-neutral-600 gap-1 items-center">
           <GrArticle size={15} />
           <p className="text-xs">{stories.length} stories</p>
