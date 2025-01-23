@@ -1,8 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { Layout } from "./components/Layout";
 import { Error } from "./pages/Error";
-import { Today } from "./pages/Today";
-import { DayOverview } from "./components/DayOverview";
+import { DayOverview } from "./pages/DayOverview";
 
 export const router = createBrowserRouter([
   {

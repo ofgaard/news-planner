@@ -12,4 +12,9 @@ router.get("/:date", async (req, res) => {
   res.json(stories);
 });
 
+router.get("/week/:start_date", async (req, res) => {
+  const stories = await StoryController.getAllFromWeek(req.params.start_date);
+  res.json(stories);
+});
+
 module.exports = router;

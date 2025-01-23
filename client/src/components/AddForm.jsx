@@ -1,5 +1,4 @@
-import { CgAdd } from "react-icons/cg";
-import { FormButton } from "./FormButton";
+import { FormButton } from "./UI/FormButton";
 
 export const AddForm = () => {
   return (

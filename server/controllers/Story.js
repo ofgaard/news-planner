@@ -1,4 +1,5 @@
 const prisma = require("../config/PrismaClient");
+const { all } = require("../routes/Story");
 
 const getAllFromDate = async (date) => {
   const selectedDate = date ? new Date(date) : new Date();
@@ -28,8 +29,30 @@ const getAllFromDate = async (date) => {
     return stories;
   } catch (error) {
     console.log(error);
-    throw new Error("From Backend: Error fetching stories");
+    throw new Error("From Backend: Error fetching stories (day)");
   }
 };
 
-module.exports = { getAllFromDate };
+const getAllFromWeek = async (start_date) => {
+  try {
+    const allStories = [];
+
+    const startDate = new Date(start_date);
+
+    for (let i = 0; i < 7; i++) {
+      const currentDate = new Date(startDate);
+      currentDate.setDate(startDate.getDate() + i);
+      const stories = await getAllFromDate(currentDate);
+      allStories.push({
+        date: currentDate.toISOString().split("T")[0],
+        stories: stories || [],
+      });
+    }
+    return allStories;
+  } catch (error) {
+    console.log(error);
+    throw new Error("From Backend: Error fetching stories (week)");
+  }
+};
+
+module.exports = { getAllFromDate, getAllFromWeek };

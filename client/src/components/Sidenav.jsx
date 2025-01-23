@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ProfileIcon } from "./UI/ProfileIcon";
 import { MenuItem } from "./UI/MenuItem";
 import { MenuListItem } from "./UI/MenuListItem";
-import { AddForm } from "./UI/AddForm";
+import { AddForm } from "./AddForm";
 import { CgAdd } from "react-icons/cg";
 import { CgSearch } from "react-icons/cg";
 import { CgCalendarToday } from "react-icons/cg";
@@ -12,10 +12,16 @@ import { MenuLink } from "./UI/MenuLink";
 
 export const Sidenav = () => {
   const [addFormVisible, setAddFormVisible] = useState(false);
+  const [calendarVisible, setCalendarVisible] = useState(false);
 
   const toggleForm = () => {
     setAddFormVisible((prev) => !prev);
     console.log(addFormVisible);
+  };
+
+  const toggleCalendar = () => {
+    setCalendarVisible((prev) => !prev);
+    console.log(calendarVisible);
   };
 
   return (
@@ -45,11 +51,12 @@ export const Sidenav = () => {
         </ul>
       </div>
       <div>
-        <MenuItem
+        <MenuLink
+          to={"/"}
           icon={CgCalendarDates}
-          content="Calendar"
+          label="Week"
           iconColor="darkgreen"
-        ></MenuItem>
+        ></MenuLink>
         <ul className="pl-2 pt-2">
           <MenuListItem content="Breaking"></MenuListItem>
           <MenuListItem content="Politik"></MenuListItem>

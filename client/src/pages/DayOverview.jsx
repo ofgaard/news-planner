@@ -1,32 +1,13 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { GrArticle } from "react-icons/gr";
 import { CgUser } from "react-icons/cg";
 import { CiClock2 } from "react-icons/ci";
-import { fetchStoriesByDay } from "../services/api/Stories";
-import { Weekday } from "./UI/ShowWeekday";
+import { useFetchStoriesByDay } from "../hooks/useFetchStoriesByDay";
+import { Weekday } from "../components/UI/ShowWeekday";
 
 export const DayOverview = () => {
-  const [stories, setStories] = useState([]);
-  const [loading, setLoading] = useState(true);
   const { date } = useParams();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const fetchedStories = await fetchStoriesByDay(date);
-        console.log(fetchedStories);
-        setStories(fetchedStories);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const { stories, loading } = useFetchStoriesByDay(date);
 
   if (loading) {
     return <p>Loading ... </p>;
