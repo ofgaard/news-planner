@@ -4,15 +4,21 @@ import { useGetWeekByDate } from "./useGetWeekByDate";
 const useFetchStoriesByWeek = (date) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { start } = useGetWeekByDate(date);
+  const { weekStartDate } = useGetWeekByDate(date);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      //   try {
-      //   fetchedStories = await fetchStoriesByWeek(date);
-      //   setStories(fetchedStories);
-      //   }
+      try {
+        const fetchedStories = await fetchStoriesByWeek(weekStartDate);
+        setStories(fetchedStories);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     };
-  });
+    fetchData();
+  }, [weekStartDate]);
+  return { stories, loading };
 };

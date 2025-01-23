@@ -17,4 +17,14 @@ export const fetchStoriesByDay = async (day) => {
   }
 };
 
-export const fetchStoriesByWeek = async (week) => {};
+export const fetchStoriesByWeek = async (week) => {
+  try {
+    const response = await fetch(`${URL}/week/${week}`);
+
+    const stories = await response.json();
+
+    return stories;
+  } catch (error) {
+    console.log(error);
+  }
+};
