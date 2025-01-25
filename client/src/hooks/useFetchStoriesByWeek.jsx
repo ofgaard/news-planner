@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useGetWeekByDate } from "./useGetWeekByDate";
+import { fetchStoriesByWeek } from "../services/api/Stories";
 
-const useFetchStoriesByWeek = (date) => {
+export const useFetchStoriesByWeek = (date) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const { weekStartDate } = useGetWeekByDate(date);

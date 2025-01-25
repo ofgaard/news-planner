@@ -1,9 +1,9 @@
 import { useParams } from "react-router";
-import { GrArticle } from "react-icons/gr";
 import { CgUser } from "react-icons/cg";
 import { CiClock2 } from "react-icons/ci";
 import { useFetchStoriesByDay } from "../hooks/useFetchStoriesByDay";
-import { Weekday } from "../components/UI/ShowWeekday";
+import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
+import { StoryCounter } from "../components/UI/StoryCounter";
 
 export const DayOverview = () => {
   const { date } = useParams();
@@ -14,13 +14,10 @@ export const DayOverview = () => {
   }
 
   return (
-    <div className="flex flex-col px-10 py-10">
+    <div className="flex flex-col p-10">
       <div className="flex flex-col gap-1 mb-5">
-        <Weekday date={date}></Weekday>
-        <div className="flex flex-row text-neutral-600 gap-1 items-center">
-          <GrArticle size={15} />
-          <p className="text-xs">{stories.length} stories</p>
-        </div>
+        <DayOfWeek date={date}></DayOfWeek>
+        <StoryCounter stories={stories}></StoryCounter>
       </div>
 
       {stories.map((story) => {

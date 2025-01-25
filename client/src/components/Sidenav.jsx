@@ -9,8 +9,10 @@ import { CgCalendarToday } from "react-icons/cg";
 import { CgCalendarDates } from "react-icons/cg";
 import { PiUsersThree } from "react-icons/pi";
 import { MenuLink } from "./UI/MenuLink";
+import { useGetWeekByDate } from "../hooks/useGetWeekByDate";
 
 export const Sidenav = () => {
+  const { weekStartDate } = useGetWeekByDate();
   const [addFormVisible, setAddFormVisible] = useState(false);
   const [calendarVisible, setCalendarVisible] = useState(false);
 
@@ -38,7 +40,7 @@ export const Sidenav = () => {
       </div>
       <div>
         <MenuLink
-          to={"/"}
+          link={"/"}
           icon={CgCalendarToday}
           label="Today"
           iconColor="darkgreen"
@@ -52,7 +54,7 @@ export const Sidenav = () => {
       </div>
       <div>
         <MenuLink
-          to={"/"}
+          link={`/week/${weekStartDate}`}
           icon={CgCalendarDates}
           label="Week"
           iconColor="darkgreen"
