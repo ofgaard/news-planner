@@ -1,5 +1,4 @@
 const prisma = require("../config/PrismaClient");
-const { all } = require("../routes/Story");
 
 const getAllFromDate = async (date) => {
   const selectedDate = date ? new Date(date) : new Date();
