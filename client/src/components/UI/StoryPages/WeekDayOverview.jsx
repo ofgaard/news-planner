@@ -1,5 +1,5 @@
-import { DayOfWeek } from "./ShowDayOfWeek";
-import { StoryCounter } from "./StoryCounter";
+import { DayOfWeek } from "../ShowDayOfWeek";
+import { StoryCounter } from "../StoryCounter";
 import { Link } from "react-router";
 
 export const WeekDayOverview = ({ date, stories, to }) => {
@@ -12,7 +12,6 @@ export const WeekDayOverview = ({ date, stories, to }) => {
         <DayOfWeek textSize="text-sm" date={date}></DayOfWeek>
         <StoryCounter stories={stories}></StoryCounter>
       </div>
-      {/* Stories */}
       <div className="text-xs flex flex-col gap-2">
         {stories.map((story) => (
           <h1 key={story.id}>{story.title}</h1>

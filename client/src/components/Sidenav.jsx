@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router";
 import { ProfileIcon } from "./UI/ProfileIcon";
 import { MenuItem } from "./UI/MenuItem";
 import { MenuListItem } from "./UI/MenuListItem";
@@ -12,6 +13,7 @@ import { MenuLink } from "./UI/MenuLink";
 import { useGetWeekByDate } from "../hooks/useGetWeekByDate";
 
 export const Sidenav = () => {
+  const location = useLocation();
   const { weekStartDate } = useGetWeekByDate();
   const [addFormVisible, setAddFormVisible] = useState(false);
   const [sideNavVisible, setSideNavVisible] = useState(true);
@@ -25,11 +27,13 @@ export const Sidenav = () => {
     setSideNavVisible((prev) => !prev);
   };
 
-  const autoToggleMobileNav = () => {
-    window.innerWidth >= 768 && setSideNavVisible(false);
-  };
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setSideNavVisible(false);
+    }
+  }, [location.pathname]);
 
-  window.addEventListener("resize", autoToggleMobileNav);
+  window.addEventListener("resize", toggleSideNavForMobile);
 
   return (
     <>
@@ -37,12 +41,12 @@ export const Sidenav = () => {
         className={`flex md:hidden ${sideNavVisible && "hidden"} pt-2 pl-2`}
         onClick={toggleSideNavForMobile}
       >
-        click me
+        ☰
       </button>
       <div
         className={`md:bg-opacity-35 bg-white border-r md:border-none md:bg-neutral-100 ${
           !sideNavVisible && "hidden"
-        } fixed md:relative min-h-screen min-w-72 pl-8 pr-4 py-3 md:flex flex-col gap-9`}
+        } fixed md:relative min-h-screen min-w-72 pl-8 pr-4 py-3 md:flex flex flex-col gap-9`}
       >
         <ProfileIcon name="Oliver"></ProfileIcon>
         <div className="flex flex-col gap-1">
