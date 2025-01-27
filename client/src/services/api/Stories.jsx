@@ -28,3 +28,14 @@ export const fetchStoriesByWeek = async (week) => {
     console.log(error);
   }
 };
+
+export const fetchStoryById = async (id) => {
+  try {
+    const response = await fetch(`${URL}story/${id}`);
+    const story = await response.json();
+
+    return story;
+  } catch (error) {
+    console.log(error);
+  }
+};

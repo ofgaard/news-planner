@@ -17,4 +17,9 @@ router.get("/week/:start_date", async (req, res) => {
   res.json(stories);
 });
 
+router.get("/story/:id", async (req, res) => {
+  const story = await StoryController.getFromId(req.params.id);
+  res.json(story);
+});
+
 module.exports = router;

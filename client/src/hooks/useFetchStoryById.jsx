@@ -1,24 +1,26 @@
-import { useState, useEffect } from "react";
 import { fetchStoryById } from "../services/api/Stories";
+import { useEffect } from "react";
+import { useState } from "react";
 
 export const useFetchStoryById = (id) => {
+  const [loading, setLoading] = useState(false);
   const [story, setStory] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
-      setLoading(true);
       try {
-        const fetchedStory = await fetchStoryById(id);
-        setStory(fetchedStory);
-        console.log("story in hook:", story);
+        const data = await fetchStoryById(id);
+        setStory(data);
       } catch (error) {
         console.log(error);
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
+    if (id) {
+      fetchData();
+    }
   }, [id]);
-  return { story, loading };
+  return { loading, story };
 };

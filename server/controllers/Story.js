@@ -54,4 +54,25 @@ const getAllFromWeek = async (start_date) => {
   }
 };
 
-module.exports = { getAllFromDate, getAllFromWeek };
+const getFromId = async (id) => {
+  try {
+    const story = await prisma.story.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        journalists: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+    return story;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+module.exports = { getAllFromDate, getAllFromWeek, getFromId };

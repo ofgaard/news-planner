@@ -3,6 +3,7 @@ import { Layout } from "./components/Layout";
 import { Error } from "./pages/Error";
 import { DayOverview } from "./pages/DayOverview";
 import { WeekOverview } from "./pages/WeekOverview";
+import { StoryOverview } from "./pages/StoryOverview";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: "week/:date?",
         element: <WeekOverview></WeekOverview>,
+      },
+      {
+        path: "story/:id",
+        element: <StoryOverview></StoryOverview>,
       },
     ],
   },

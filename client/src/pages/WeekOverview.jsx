@@ -8,16 +8,16 @@ export const WeekOverview = () => {
 
   return (
     <div className="flex flex-col p-10 w-full gap-28">
-      {/* header */}
       <div>
         <h1 className="text-xl font-extrabold">Week</h1>
       </div>
-      {/* content block */}
+
       <div className="flex flex-row w-full gap-2 flex-wrap">
-        {stories.map((story) => {
+        {stories.map((story, index) => {
           console.log(story);
           return (
             <WeekDayOverview
+              key={index}
               date={story.date}
               stories={story.stories}
               to={`/day/${story.date}`}
