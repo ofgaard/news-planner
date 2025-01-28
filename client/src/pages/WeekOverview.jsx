@@ -6,6 +6,9 @@ export const WeekOverview = () => {
   const { date } = useParams();
   const { stories, loading } = useFetchStoriesByWeek(date);
 
+  if (loading) {
+    return <p>Loading ...</p>;
+  }
   return (
     <div className="flex flex-col p-10 w-full gap-28">
       <div>
