@@ -1,23 +1,23 @@
 import { DayOfWeek } from "./ShowDayOfWeek";
 import { StoryCounter } from "./StoryCounter";
+import { GoToDate } from "./Buttons/GoToDate";
 import { Link } from "react-router";
 
-export const WeekDayOverview = ({ date, stories, to }) => {
+export const WeekDayOverview = ({ date, stories }) => {
   return (
-    <Link
-      className="border rounded-md flex flex-col gap-2 p-2 w-40 hover:bg-neutral-100 bg-opacity-65"
-      to={to}
-    >
+    <div className="border rounded-md flex flex-col gap-2 p-2 w-40">
       <div className="flex flex-col">
         <DayOfWeek textSize="text-sm" date={date}></DayOfWeek>
         <StoryCounter stories={stories}></StoryCounter>
       </div>
-      {/* Stories */}
-      <div className="text-xs flex flex-col gap-2">
+      <div className="text-xs flex flex-col gap-2 flex-grow">
         {stories.map((story) => (
-          <h1 key={story.id}>{story.title}</h1>
+          <Link key={story.id} to={`/story/${story.id}`}>
+            <p className="hover:text-green-800">{story.title}</p>
+          </Link>
         ))}
       </div>
-    </Link>
+      <GoToDate date={date}></GoToDate>
+    </div>
   );
 };

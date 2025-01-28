@@ -1,10 +1,10 @@
 import { useParams } from "react-router";
-import { CgUser } from "react-icons/cg";
 import { useFetchStoriesByDay } from "../hooks/useFetchStoriesByDay";
 import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
 import { StoryCounter } from "../components/UI/StoryCounter";
 import { StoryTimeOfCreation } from "../components/UI/StoryTimeOfCreation";
 import { StoryListJournalists } from "../components/UI/StoryListJournalists";
+import { GoToStory } from "../components/UI/Buttons/GoToStory";
 
 export const DayOverview = () => {
   const { date } = useParams();
@@ -33,6 +33,7 @@ export const DayOverview = () => {
               <StoryTimeOfCreation time={story.createdAt}></StoryTimeOfCreation>
             </div>
             <p className="max-w-4xl">{story.description}</p>
+            <GoToStory story={story}></GoToStory>
           </div>
         );
       })}
