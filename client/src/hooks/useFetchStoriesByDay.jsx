@@ -5,13 +5,14 @@ export const useFetchStoriesByDay = (date) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  console.log("2: useFetchStoriesByDay:", date);
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
         const fetchedStories = await fetchStoriesByDay(date);
-        console.log(fetchedStories);
+        if (fetchedStories) {
+          console.log("useFetchStoriesByDay", fetchedStories);
+        }
         setStories(fetchedStories);
       } catch (error) {
         console.log(error);

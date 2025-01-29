@@ -7,10 +7,9 @@ import { StoryListJournalists } from "../components/UI/StoryListJournalists";
 import { GoToStory } from "../components/UI/Buttons/GoToStory";
 
 export const DayOverview = () => {
-  const { date } = useParams();
+  const { date: paramDate } = useParams();
+  const date = paramDate || new Date().toLocaleDateString("en-CA");
   const { stories, loading } = useFetchStoriesByDay(date);
-
-  console.log("1: DayOverview:", date);
 
   if (loading) {
     return <p>Loading ... </p>;

@@ -1,10 +1,7 @@
 const URL = "http://localhost:3002/stories/";
 
-export const fetchStoriesByDay = async (day) => {
+export const fetchStoriesByDay = async (date) => {
   try {
-    const date = day || new Date().toISOString().split("T")[0];
-    console.log("3: fetchStoriesByDay(api-call):", date);
-
     const response = await fetch(`${URL}${date}`);
 
     const stories = await response.json();

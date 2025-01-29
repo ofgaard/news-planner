@@ -1,24 +1,22 @@
 const { startOfDay, endOfDay } = require("date-fns");
-const { fromZonedTime } = require("date-fns-tz");
 const prisma = require("../config/PrismaClient");
 
 const getAllFromDate = async (date) => {
   console.log("Date from backend controller:", date);
-  const startOfDayLocal = startOfDay(new Date(date));
-  const endOfDayLocal = endOfDay(new Date(date));
 
-  const startOfDayUTC = fromZonedTime(startOfDayLocal, "America/Mexico_City");
-  const endOfDayUTC = fromZonedTime(endOfDayLocal, "America/Mexico_City");
+  const localDate = new Date(`${date}T00:00:00`);
+  const startOfDayLocal = startOfDay(localDate);
+  const endOfDayLocal = endOfDay(localDate);
 
-  console.log("startOfDayUTC", startOfDayUTC);
-  console.log("endOfDayUTC", endOfDayUTC);
+  console.log("startOfDayLocal", startOfDayLocal);
+  console.log("endOfDayLocal", endOfDayLocal);
 
   try {
     const stories = await prisma.story.findMany({
       where: {
         createdAt: {
-          gte: startOfDayUTC,
-          lte: endOfDayUTC,
+          gte: startOfDayLocal,
+          lte: endOfDayLocal,
         },
       },
       include: {
@@ -44,12 +42,13 @@ const getAllFromWeek = async (start_date) => {
   try {
     const allStories = [];
 
-    const startDate = new Date(start_date);
+    const startDate = new Date(`${start_date}T00:00:00`);
 
     for (let i = 0; i < 7; i++) {
       const currentDate = new Date(startDate);
       currentDate.setDate(startDate.getDate() + i);
-      const stories = await getAllFromDate(currentDate);
+      const formattedDate = currentDate.toISOString().split("T")[0];
+      const stories = await getAllFromDate(formattedDate);
       allStories.push({
         date: currentDate.toISOString().split("T")[0],
         stories: stories || [],
