@@ -17,6 +17,7 @@ export const WeekDayOverview = ({ date, stories }) => {
           </Link>
         ))}
       </div>
+
       <GoToDate date={date}></GoToDate>
     </div>
   );

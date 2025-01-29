@@ -28,6 +28,7 @@ model Story {
   journalists StoryOnUser[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  topic       String?
 }
 
 model StoryOnUser {

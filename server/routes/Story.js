@@ -22,4 +22,15 @@ router.get("/story/:id", async (req, res) => {
   res.json(story);
 });
 
+router.post("/submit/", async (req, res) => {
+  const { title, description, userId, topic } = req.body;
+  const result = await StoryController.submitStory(
+    title,
+    description,
+    userId,
+    topic
+  );
+  res.json(result);
+});
+
 module.exports = router;

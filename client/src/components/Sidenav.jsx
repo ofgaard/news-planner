@@ -19,7 +19,6 @@ export const Sidenav = () => {
 
   const toggleForm = () => {
     setAddFormVisible((prev) => !prev);
-    console.log(addFormVisible);
   };
 
   return (
@@ -72,7 +71,7 @@ export const Sidenav = () => {
             iconColor="darkgreen"
           ></MenuItem>
         </div>
-        {addFormVisible && <AddForm />}
+        {addFormVisible && <AddForm toggle={() => toggleForm} />}
       </div>
     </>
   );
