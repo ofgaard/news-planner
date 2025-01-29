@@ -15,7 +15,6 @@ import { useGetWeekByDate } from "../hooks/useGetWeekByDate";
 export const Sidenav = () => {
   const { weekStartDate } = useGetWeekByDate();
   const [addFormVisible, setAddFormVisible] = useState(false);
-  const [sideNavVisible, setSideNavVisible] = useState(true);
 
   const toggleForm = () => {
     setAddFormVisible((prev) => !prev);
