@@ -3,7 +3,7 @@ const URL = "http://localhost:3002/stories/";
 export const fetchStoriesByDay = async (day) => {
   try {
     const date = day || new Date().toISOString().split("T")[0];
-    console.log(date);
+    console.log("3: fetchStoriesByDay(api-call):", date);
 
     const response = await fetch(`${URL}${date}`);
 

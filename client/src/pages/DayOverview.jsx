@@ -10,6 +10,8 @@ export const DayOverview = () => {
   const { date } = useParams();
   const { stories, loading } = useFetchStoriesByDay(date);
 
+  console.log("1: DayOverview:", date);
+
   if (loading) {
     return <p>Loading ... </p>;
   }

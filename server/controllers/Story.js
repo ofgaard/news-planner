@@ -1,20 +1,24 @@
+const { startOfDay, endOfDay } = require("date-fns");
+const { fromZonedTime } = require("date-fns-tz");
 const prisma = require("../config/PrismaClient");
 
 const getAllFromDate = async (date) => {
-  const selectedDate = date ? new Date(date) : new Date();
+  console.log("Date from backend controller:", date);
+  const startOfDayLocal = startOfDay(new Date(date));
+  const endOfDayLocal = endOfDay(new Date(date));
 
-  const startOfDay = new Date(selectedDate);
-  startOfDay.setHours(0, 0, 0, 0);
+  const startOfDayUTC = fromZonedTime(startOfDayLocal, "America/Mexico_City");
+  const endOfDayUTC = fromZonedTime(endOfDayLocal, "America/Mexico_City");
 
-  const endOfDay = new Date(selectedDate);
-  endOfDay.setHours(23, 59, 59, 999);
+  console.log("startOfDayUTC", startOfDayUTC);
+  console.log("endOfDayUTC", endOfDayUTC);
 
   try {
     const stories = await prisma.story.findMany({
       where: {
         createdAt: {
-          gte: startOfDay,
-          lte: endOfDay,
+          gte: startOfDayUTC,
+          lte: endOfDayUTC,
         },
       },
       include: {
@@ -25,6 +29,10 @@ const getAllFromDate = async (date) => {
         },
       },
     });
+    if (!stories) {
+      console.log("No stories found");
+    }
+    console.log("Stories from backend controller:", stories);
     return stories;
   } catch (error) {
     console.log(error);

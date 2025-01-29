@@ -8,6 +8,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:date", async (req, res) => {
+  console.log("4. Story.js(API, backend)", req.params.date);
   const stories = await StoryController.getAllFromDate(req.params.date);
   res.json(stories);
 });
