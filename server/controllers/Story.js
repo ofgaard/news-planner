@@ -100,33 +100,6 @@ const getFromId = async (id) => {
   }
 };
 
-const submitStory = async (title, description, journalistIds, topic, date) => {
-  try {
-    const newStory = await prisma.story.create({
-      data: {
-        title,
-        description,
-        topic,
-        date,
-        journalists: {
-          create: journalistIds.map((id) => ({ userId: parseInt(id) })),
-        },
-      },
-      include: {
-        journalists: {
-          include: {
-            user: true,
-          },
-        },
-      },
-    });
-    return newStory;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 module.exports = {
   getStoriesFromDate,
   getStoriesForWeek,
