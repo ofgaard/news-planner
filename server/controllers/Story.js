@@ -76,25 +76,30 @@ const getFromId = async (id) => {
   }
 };
 
-const submitStory = async (title, description, userId, date, topic) => {
+const submitStory = async (title, description, journalistIds, topic, date) => {
   try {
-    const story = await prisma.story.create({
+    const newStory = await prisma.story.create({
       data: {
         title,
         description,
-        date,
         topic,
+        date,
+        journalists: {
+          create: journalistIds.map((id) => ({ userId: parseInt(id) })),
+        },
+      },
+      include: {
+        journalists: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
-    await prisma.storyOnUser.create({
-      data: {
-        userId: parseInt(userId),
-        storyId: parseInt(story.id),
-      },
-    });
-    return story;
+    return newStory;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 

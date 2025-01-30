@@ -34,17 +34,17 @@ export const fetchStoryById = async (id) => {
   }
 };
 
-export const postStory = async (submission) => {
+export const addStory = async (storyData) => {
   try {
     const response = await fetch(`${URL}submit/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(submission),
+      body: JSON.stringify(storyData),
     });
-    const story = await response.json();
-    return story;
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.log(error);
   }

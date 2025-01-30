@@ -11,8 +11,6 @@ export const DayOverview = () => {
   const date = paramDate || new Date().toLocaleDateString("en-CA");
   const { stories, loading } = useFetchStoriesByDate(date);
 
-  console.log("todays date is:", date);
-
   if (loading) {
     return <p>Loading ... </p>;
   }
