@@ -1,16 +1,22 @@
 const { startOfDay, endOfDay } = require("date-fns");
 const prisma = require("../config/PrismaClient");
 
-const getStoriesFromDate = async (date) => {
-  const localDate = new Date(`${date}T00:00:00-06:00`);
-  const utcDate = new Date(localDate.toISOString());
-
+const getStoriesFromDate = async (dateParam) => {
   try {
+    const date = new Date(dateParam);
+    if (isNaN(date)) {
+      throw new Error("Invalid date");
+    }
+    const startOfDay = new Date(date);
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+
     const stories = await prisma.story.findMany({
       where: {
-        createdAt: {
-          gte: utcDate,
-          lt: new Date(utcDate.getTime() + 24 * 60 * 60 * 1000),
+        publishBy: {
+          gte: startOfDay,
+          lt: endOfDay,
         },
       },
       include: {
@@ -27,31 +33,49 @@ const getStoriesFromDate = async (date) => {
   }
 };
 
-const getStoriesByDateRange = async (startDate) => {
+const getStoriesForWeek = async (dateParam) => {
   try {
-    const startOfWeek = new Date(startDate);
-    const endOfWeek = new Date(startDate);
-    endOfWeek.setDate(startOfWeek.getDate() + 6);
+    const date = new Date(dateParam);
+    if (isNaN(date)) throw new Error("Invalid date");
 
-    const stories = await prisma.story.findMany({
-      where: {
-        createdAt: {
-          gte: startOfWeek,
-          lte: endOfWeek,
-        },
-      },
-      include: {
-        journalists: {
-          include: {
-            user: true,
+    const startOfWeek = new Date(date);
+    startOfWeek.setDate(date.getDate() - date.getDay() + 1);
+
+    const stories = [];
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(startOfWeek);
+      day.setDate(startOfWeek.getDate() + i);
+
+      const startOfDay = new Date(day);
+      startOfDay.setHours(0, 0, 0, 0);
+      const endOfDay = new Date(day);
+      endOfDay.setHours(23, 59, 59, 999);
+
+      const dailyStories = await prisma.story.findMany({
+        where: {
+          publishBy: {
+            gte: startOfDay,
+            lt: endOfDay,
           },
         },
-      },
-    });
+        include: {
+          journalists: {
+            include: {
+              user: true,
+            },
+          },
+        },
+      });
+
+      stories.push({
+        date: day.toISOString().split("T")[0],
+        stories: dailyStories,
+      });
+    }
+
     return stories;
   } catch (error) {
     console.log(error);
-    throw error;
   }
 };
 
@@ -105,7 +129,7 @@ const submitStory = async (title, description, journalistIds, topic, date) => {
 
 module.exports = {
   getStoriesFromDate,
-  getStoriesByDateRange,
+  getStoriesForWeek,
   getFromId,
   submitStory,
 };

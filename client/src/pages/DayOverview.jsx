@@ -7,9 +7,10 @@ import { StoryListJournalists } from "../components/UI/StoryListJournalists";
 import { GoToStory } from "../components/UI/Buttons/GoToStory";
 
 export const DayOverview = () => {
-  const { date: paramDate } = useParams();
-  const date = paramDate || new Date().toLocaleDateString("en-CA");
-  const { stories, loading } = useFetchStoriesByDate(date);
+  const { date } = useParams();
+  const storiesDate = date || new Date().toLocaleDateString("en-CA");
+
+  const { stories, loading } = useFetchStoriesByDate(storiesDate);
 
   if (loading) {
     return <p>Loading ... </p>;
@@ -18,7 +19,7 @@ export const DayOverview = () => {
   return (
     <div className="flex flex-col p-10 ">
       <div className="flex flex-col gap-1 mb-5">
-        <DayOfWeek date={date}></DayOfWeek>
+        <DayOfWeek date={storiesDate}></DayOfWeek>
         <StoryCounter stories={stories}></StoryCounter>
       </div>
 

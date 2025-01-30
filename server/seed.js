@@ -1,68 +1,99 @@
-// seed.js
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-async function main() {
-  // Create dummy journalists (users)
-  const journalist1 = await prisma.user.create({
-    data: {
-      name: "John Doe",
-      email: "john.doe@example.com",
-      password: "password123",
-    },
-  });
+const seed = async () => {
+  // Clear previous data
+  await prisma.user.deleteMany({});
+  await prisma.story.deleteMany({});
 
-  const journalist2 = await prisma.user.create({
-    data: {
-      name: "Jane Smith",
-      email: "jane.smith@example.com",
-      password: "password123",
-    },
-  });
-
-  // Create dummy stories for each day of the week (Monday to Sunday)
-  const daysOfWeek = [
-    "2025-01-27", // Monday
-    "2025-01-28", // Tuesday
-    "2025-01-29", // Wednesday
-    "2025-01-30", // Thursday
-    "2025-01-31", // Friday
-    "2025-02-01", // Saturday
-    "2025-02-02", // Sunday
-  ];
-
-  for (let i = 0; i < daysOfWeek.length; i++) {
-    const date = daysOfWeek[i];
-    await prisma.story.create({
-      data: {
-        title: `Breaking News on ${date}`,
-        description: `This is a breaking news story for ${date}.`,
-        createdAt: new Date(`${date}T10:00:00Z`), // 10:00 AM UTC
-        journalists: {
-          create: [{ userId: journalist1.id }],
-        },
+  // Dummy Users
+  await prisma.user.createMany({
+    data: [
+      {
+        name: "Alice Johnson",
+        email: "alice@example.com",
+        password: "password123",
       },
-    });
+      { name: "Bob Smith", email: "bob@example.com", password: "password123" },
+      {
+        name: "Charlie Davis",
+        email: "charlie@example.com",
+        password: "password123",
+      },
+    ],
+    skipDuplicates: true, // Skip duplicates if emails already exist
+  });
 
-    await prisma.story.create({
+  // Fetch users after creation
+  const users = await prisma.user.findMany();
+
+  // Dummy Stories for January 29, 2025
+  const date = new Date("2025-01-29");
+
+  const stories = await prisma.story.createMany({
+    data: [
+      {
+        title: "Breaking News: Market Crash",
+        description:
+          "Stock markets have taken a sharp downturn today due to unforeseen economic shifts.",
+        publishBy: date,
+        topic: "Finance",
+      },
+      {
+        title: "Sports: Super Bowl Preview",
+        description:
+          "As the Super Bowl approaches, we analyze the top teams and players to watch.",
+        publishBy: date,
+        topic: "Sports",
+      },
+      {
+        title: "Weather Update: Snowstorm Alert",
+        description:
+          "A massive snowstorm is expected to hit the region tomorrow, with dangerous conditions.",
+        publishBy: date,
+        topic: "Weather",
+      },
+      {
+        title: "Health: New Study on Exercise and Mental Health",
+        description:
+          "A recent study shows how daily exercise can greatly improve mental health and reduce stress.",
+        publishBy: date,
+        topic: "Health",
+      },
+      {
+        title: "Tech: AI Innovations in 2025",
+        description:
+          "Exploring the cutting-edge advancements in artificial intelligence technology and their potential applications.",
+        publishBy: date,
+        topic: "Technology",
+      },
+    ],
+  });
+
+  // Fetch created stories so we can assign journalists to them
+  const createdStories = await prisma.story.findMany({
+    where: {
+      publishBy: date,
+    },
+  });
+
+  // Assign Journalists to Stories (randomly assigning users)
+  for (const story of createdStories) {
+    const randomUser = users[Math.floor(Math.random() * users.length)];
+    await prisma.storyOnUser.create({
       data: {
-        title: `Local Event on ${date}`,
-        description: `A local event occurred on ${date}.`,
-        createdAt: new Date(`${date}T15:00:00Z`), // 3:00 PM UTC
-        journalists: {
-          create: [{ userId: journalist2.id }],
-        },
+        storyId: story.id,
+        userId: randomUser.id,
       },
     });
   }
 
-  console.log("Dummy data created successfully!");
-}
+  console.log("Database seeded successfully!");
+};
 
-main()
+seed()
   .catch((e) => {
     console.error(e);
-    process.exit(1);
   })
   .finally(async () => {
     await prisma.$disconnect();

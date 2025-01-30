@@ -11,6 +11,7 @@ export const useFetchStoriesByWeek = (startDate) => {
       setLoading(true);
       try {
         const data = await fetchStoriesByWeek(startDate);
+
         setStories(data);
       } catch (error) {
         setError(error.message);

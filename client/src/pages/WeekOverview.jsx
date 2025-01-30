@@ -1,48 +1,29 @@
 import { useParams } from "react-router";
 import { useFetchStoriesByWeek } from "../hooks/useFetchStoriesByWeek";
-import { SingleWeekDay } from "../components/UI/Cards/SingleWeekDay";
+import { WeekDay } from "../components/UI/Cards/WeekDay";
+import { GoToStory } from "../components/UI/Buttons/GoToStory";
+import { StoryCounter } from "../components/UI/StoryCounter";
+import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
 
 export const WeekOverview = () => {
   const { startDate } = useParams();
-  const { stories, loading } = useFetchStoriesByWeek(startDate);
+  const storiesDate = startDate || new Date().toLocaleDateString("en-CA");
+  const { stories, loading } = useFetchStoriesByWeek(storiesDate);
+
+  console.log(stories);
 
   if (loading) {
     return <p>Loading ...</p>;
   }
 
-  const storiesByDay = stories.reduce((acc, story) => {
-    const day = new Date(story.createdAt).toLocaleDateString("en-US", {
-      weekday: "long",
-    });
-    if (!acc[day]) acc[day] = [];
-    acc[day].push(story);
-    return acc;
-  }, {});
-
-  const daysOfWeek = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday",
-  ];
-
   return (
-    <div className="flex flex-col p-10 w-full gap-28">
-      <div>
-        <h1 className="text-xl font-extrabold">Week</h1>
+    <div className="flex flex-col p-10 gap-20">
+      <div className="flex flex-col">
+        <h1 className="font-extrabold text-xl">Week</h1>
       </div>
-
-      <div className="flex flex-row w-full gap-2 flex-wrap">
-        {daysOfWeek.map((day, index) => (
-          <SingleWeekDay
-            key={index}
-            date={day}
-            stories={storiesByDay[day] || []}
-            to={`/day/${day}`}
-          />
+      <div className="flex flex-row gap-2 mt-">
+        {stories.map((day, index) => (
+          <WeekDay key={index} date={day.date} stories={day.stories}></WeekDay>
         ))}
       </div>
     </div>

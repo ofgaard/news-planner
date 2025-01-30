@@ -7,15 +7,19 @@ router.get("/", (req, res) => {
   res.json({ message: "Hello world" });
 });
 
-router.get("/:date", async (req, res) => {
-  const stories = await StoryController.getStoriesFromDate(req.params.date);
-  res.json(stories);
+router.get("/:date?", async (req, res) => {
+  try {
+    const dateParam = req.params.date || new Date().toISOString().split("T")[0];
+    const stories = await StoryController.getStoriesFromDate(dateParam);
+    res.json(stories);
+  } catch (error) {
+    console.error("Error fetching stories:", error);
+    res.status(500).json({ message: "Error fetching stories" });
+  }
 });
 
 router.get("/week/:startDate", async (req, res) => {
-  const stories = await StoryController.getStoriesByDateRange(
-    req.params.startDate
-  );
+  const stories = await StoryController.getStoriesForWeek(req.params.startDate);
   res.json(stories);
 });
 
