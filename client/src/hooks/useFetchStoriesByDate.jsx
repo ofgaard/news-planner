@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
-import { fetchStoriesByWeek } from "../services/api/Stories";
+import { fetchStoriesByDate } from "../services/api/Stories";
 
-export const useFetchStoriesByWeek = (startDate) => {
+export const useFetchStoriesByDate = (date) => {
   const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadStories = async () => {
-      setLoading(true);
       try {
-        const data = await fetchStoriesByWeek(startDate);
+        const data = await fetchStoriesByDate(date);
         setStories(data);
       } catch (error) {
         setError(error.message);
@@ -18,7 +17,8 @@ export const useFetchStoriesByWeek = (startDate) => {
         setLoading(false);
       }
     };
+
     loadStories();
-  }, [startDate]);
+  }, [date]);
   return { stories, loading, error };
 };

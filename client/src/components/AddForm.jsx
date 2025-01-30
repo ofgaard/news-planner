@@ -3,7 +3,7 @@ import { useState } from "react";
 import { formatDate } from "../utils/formatDate";
 import { useSubmitStory } from "../hooks/useSubmitStory";
 
-export const AddForm = ({ toggle }) => {
+export const AddForm = ({ onClose }) => {
   const { submitStory } = useSubmitStory();
   const [formInput, setFormInput] = useState({
     title: "",
@@ -29,7 +29,8 @@ export const AddForm = ({ toggle }) => {
 
     try {
       console.log(formData);
-      submitStory(formData);
+      await submitStory(formData);
+      onClose();
     } catch (err) {
       console.log(err);
     }
@@ -83,7 +84,7 @@ export const AddForm = ({ toggle }) => {
           <div className="flex ml-auto mt-auto gap-2">
             <FormButton
               text={"Cancel"}
-              onClick={toggle()}
+              onClick={onClose}
               color={"bg-neutral-200"}
             ></FormButton>
             <FormButton

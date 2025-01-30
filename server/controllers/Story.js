@@ -1,22 +1,16 @@
 const { startOfDay, endOfDay } = require("date-fns");
 const prisma = require("../config/PrismaClient");
 
-const getAllFromDate = async (date) => {
-  console.log("Date from backend controller:", date);
-
-  const localDate = new Date(`${date}T00:00:00`);
-  const startOfDayLocal = startOfDay(localDate);
-  const endOfDayLocal = endOfDay(localDate);
-
-  console.log("startOfDayLocal", startOfDayLocal);
-  console.log("endOfDayLocal", endOfDayLocal);
+const getStoriesFromDate = async (date) => {
+  const localDate = new Date(`${date}T00:00:00-06:00`);
+  const utcDate = new Date(localDate.toISOString());
 
   try {
     const stories = await prisma.story.findMany({
       where: {
         createdAt: {
-          gte: startOfDayLocal,
-          lte: endOfDayLocal,
+          gte: utcDate,
+          lt: new Date(utcDate.getTime() + 24 * 60 * 60 * 1000),
         },
       },
       include: {
@@ -27,37 +21,37 @@ const getAllFromDate = async (date) => {
         },
       },
     });
-    if (!stories) {
-      console.log("No stories found");
-    }
-    console.log("Stories from backend controller:", stories);
     return stories;
   } catch (error) {
     console.log(error);
-    throw new Error("From Backend: Error fetching stories (day)");
   }
 };
 
-const getAllFromWeek = async (start_date) => {
+const getStoriesByDateRange = async (startDate) => {
   try {
-    const allStories = [];
+    const startOfWeek = new Date(startDate);
+    const endOfWeek = new Date(startDate);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-    const startDate = new Date(`${start_date}T00:00:00`);
-
-    for (let i = 0; i < 7; i++) {
-      const currentDate = new Date(startDate);
-      currentDate.setDate(startDate.getDate() + i);
-      const formattedDate = currentDate.toISOString().split("T")[0];
-      const stories = await getAllFromDate(formattedDate);
-      allStories.push({
-        date: currentDate.toISOString().split("T")[0],
-        stories: stories || [],
-      });
-    }
-    return allStories;
+    const stories = await prisma.story.findMany({
+      where: {
+        createdAt: {
+          gte: startOfWeek,
+          lte: endOfWeek,
+        },
+      },
+      include: {
+        journalists: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+    return stories;
   } catch (error) {
     console.log(error);
-    throw new Error("From Backend: Error fetching stories (week)");
+    throw error;
   }
 };
 
@@ -104,4 +98,9 @@ const submitStory = async (title, description, userId, date, topic) => {
   }
 };
 
-module.exports = { getAllFromDate, getAllFromWeek, getFromId, submitStory };
+module.exports = {
+  getStoriesFromDate,
+  getStoriesByDateRange,
+  getFromId,
+  submitStory,
+};

@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
         element: <DayOverview></DayOverview>,
       },
       {
-        path: "week/:date?",
+        path: "week/:startDate?",
         element: <WeekOverview></WeekOverview>,
       },
       {

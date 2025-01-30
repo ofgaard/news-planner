@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useFetchStoriesByDay } from "../hooks/useFetchStoriesByDay";
+import { useFetchStoriesByDate } from "../hooks/useFetchStoriesByDate";
 import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
 import { StoryCounter } from "../components/UI/StoryCounter";
 import { StoryTimeOfCreation } from "../components/UI/StoryTimeOfCreation";
@@ -9,7 +9,9 @@ import { GoToStory } from "../components/UI/Buttons/GoToStory";
 export const DayOverview = () => {
   const { date: paramDate } = useParams();
   const date = paramDate || new Date().toLocaleDateString("en-CA");
-  const { stories, loading } = useFetchStoriesByDay(date);
+  const { stories, loading } = useFetchStoriesByDate(date);
+
+  console.log("todays date is:", date);
 
   if (loading) {
     return <p>Loading ... </p>;

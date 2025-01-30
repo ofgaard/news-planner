@@ -20,6 +20,10 @@ export const Sidenav = () => {
     setAddFormVisible((prev) => !prev);
   };
 
+  const closeForm = () => {
+    setAddFormVisible(false);
+  };
+
   return (
     <>
       <div
@@ -70,7 +74,7 @@ export const Sidenav = () => {
             iconColor="darkgreen"
           ></MenuItem>
         </div>
-        {addFormVisible && <AddForm toggle={() => toggleForm} />}
+        {addFormVisible && <AddForm onClose={closeForm} />}
       </div>
     </>
   );

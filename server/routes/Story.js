@@ -8,13 +8,14 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:date", async (req, res) => {
-  console.log("4. Story.js(API, backend)", req.params.date);
-  const stories = await StoryController.getAllFromDate(req.params.date);
+  const stories = await StoryController.getStoriesFromDate(req.params.date);
   res.json(stories);
 });
 
-router.get("/week/:start_date", async (req, res) => {
-  const stories = await StoryController.getAllFromWeek(req.params.start_date);
+router.get("/week/:startDate", async (req, res) => {
+  const stories = await StoryController.getStoriesByDateRange(
+    req.params.startDate
+  );
   res.json(stories);
 });
 

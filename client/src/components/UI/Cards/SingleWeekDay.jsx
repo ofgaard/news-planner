@@ -1,9 +1,8 @@
-import { DayOfWeek } from "./ShowDayOfWeek";
-import { StoryCounter } from "./StoryCounter";
-import { GoToDate } from "./Buttons/GoToDate";
+import { StoryCounter } from "../StoryCounter";
 import { Link } from "react-router";
+import { DayOfWeek } from "../ShowDayOfWeek";
 
-export const WeekDayOverview = ({ date, stories }) => {
+export const SingleWeekDay = ({ date, stories }) => {
   return (
     <div className="border rounded-md flex flex-col gap-2 p-2 w-40">
       <div className="flex flex-col">
@@ -17,8 +16,6 @@ export const WeekDayOverview = ({ date, stories }) => {
           </Link>
         ))}
       </div>
-
-      <GoToDate date={date}></GoToDate>
     </div>
   );
 };
