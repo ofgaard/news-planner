@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useFetchAllUsers } from "../hooks/useFetchAllUsers";
 import { useFetchTopics } from "../hooks/useFetchTopics";
+import Select from "react-select";
 
 export const AddForm = ({ onClose }) => {
   const { submitStory } = useSubmitStory();
@@ -16,100 +17,84 @@ export const AddForm = ({ onClose }) => {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-    setValue,
   } = useForm();
 
-  const handleUserChange = (e) => {
-    const selectedUserId = e.target.value;
-    setSelectedUsers((prev) => {
-      if (prev.includes(selectedUserId)) {
-        return prev.filter((id) => id !== selectedUserId);
-      } else {
-        return [...prev, selectedUserId];
-      }
-    });
-  };
-
   const onSubmit = async (data) => {
-    data.journalists = selectedUsers;
-    const submittedData = await submitStory(data);
+    data.journalists = selectedUsers.map((user) => user.value);
+    await submitStory(data);
   };
 
   return (
-    <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center">
-      <div className="bg-white w-96 p-8 rounded-lg max-h-64 overflow-y-auto mt-20">
-        <h1 className="text-2xl font-bold">Add Story</h1>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white w-full max-w-lg p-6 rounded-lg shadow-lg max-h-[90vh] overflow-y-auto">
+        <h1 className="text-2xl font-bold text-gray-800">Add Story</h1>
         <form
           className="flex flex-col gap-4 mt-4"
           onSubmit={handleSubmit(onSubmit)}
         >
           <input
-            {...register("title", {
-              required: "Title is required",
-            })}
+            {...register("title", { required: "Title is required" })}
             type="text"
             placeholder="Title"
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {errors.title && (
-            <p className="text-red-500">{errors.title.message}</p>
+            <p className="text-sm text-red-500">{errors.title.message}</p>
           )}
-          <input
+
+          <textarea
             {...register("description", {
               required: "Description is required",
             })}
-            type="text"
             placeholder="Description"
-          ></input>
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          ></textarea>
           {errors.description && (
-            <p className="text-red-500">{errors.description.message}</p>
+            <p className="text-sm text-red-500">{errors.description.message}</p>
           )}
+
           <select
-            {...register("topic", {
-              required: true,
-            })}
+            {...register("topic", { required: true })}
             onChange={(e) =>
               setSelectedTopics([...selectedTopics, e.target.value])
             }
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
+            <option value="">Select Topic</option>
             {topics.map((topic) => (
-              <option key={topic.id} value={topic.id} className="text-white">
+              <option key={topic.id} value={topic.id}>
                 {topic}
               </option>
             ))}
           </select>
 
-          <select
-            {...register("journalists")}
-            onChange={handleUserChange}
-            multiple
-          >
-            {users.map((user) => (
-              <option key={user.id} value={user.id} className="text-white">
-                {user.name}
-              </option>
-            ))}
-          </select>
-          <div className="flex flex-row gap-2">
-            {selectedUsers.map((user, index) => (
-              <p key={index}>{user}</p>
-            ))}
-          </div>
+          <label className="text-gray-700">Select Journalists:</label>
+          <Select
+            options={users.map((user) => ({
+              value: user.id,
+              label: user.name,
+            }))}
+            isMulti
+            className="basic-multi-select"
+            classNamePrefix="select"
+            onChange={setSelectedUsers}
+          />
 
-          <label htmlFor="publishBy">Publish by:</label>
+          <label htmlFor="publishBy" className="text-gray-700">
+            Publish by:
+          </label>
           <input
-            {...register("publishBy", {
-              required: "Publish by is required",
-            })}
+            {...register("publishBy", { required: "Publish by is required" })}
             type="date"
-            placeholder="Publish by"
-          ></input>
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
           {errors.publishBy && (
-            <p className="text-red-500">{errors.publishBy.message}</p>
+            <p className="text-sm text-red-500">{errors.publishBy.message}</p>
           )}
 
           <button
             disabled={isSubmitting}
-            className="mt-auto ml-auto border w-full rounded-md p-1"
+            className="w-full p-2 mt-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
             type="submit"
           >
             {isSubmitting ? "Loading..." : "Submit"}
