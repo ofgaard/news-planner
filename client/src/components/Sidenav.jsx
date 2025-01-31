@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router";
 import { ProfileIcon } from "./UI/ProfileIcon";
 import { MenuItem } from "./UI/MenuItem";
 import { MenuListItem } from "./UI/MenuListItem";
@@ -16,10 +15,6 @@ export const Sidenav = () => {
 
   const toggleForm = () => {
     setAddFormVisible((prev) => !prev);
-  };
-
-  const closeForm = () => {
-    setAddFormVisible(false);
   };
 
   return (
@@ -72,7 +67,7 @@ export const Sidenav = () => {
             iconColor="darkgreen"
           ></MenuItem>
         </div>
-        {addFormVisible && <AddForm onClose={closeForm} />}
+        {addFormVisible && <AddForm onClose={() => setAddFormVisible(false)} />}
       </div>
     </>
   );

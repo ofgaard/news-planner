@@ -1,4 +1,3 @@
-import { FormButton } from "./UI/FormButton";
 import { useSubmitStory } from "../hooks/useSubmitStory";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -22,6 +21,7 @@ export const AddForm = ({ onClose }) => {
   const onSubmit = async (data) => {
     data.journalists = selectedUsers.map((user) => user.value);
     await submitStory(data);
+    onClose();
   };
 
   return (
@@ -91,14 +91,22 @@ export const AddForm = ({ onClose }) => {
           {errors.publishBy && (
             <p className="text-sm text-red-500">{errors.publishBy.message}</p>
           )}
-
-          <button
-            disabled={isSubmitting}
-            className="w-full p-2 mt-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
-            type="submit"
-          >
-            {isSubmitting ? "Loading..." : "Submit"}
-          </button>
+          <div className="flex gap-2 mt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="w-full p-2 text-white bg-gray-500 rounded-md hover:bg-gray-600"
+            >
+              Cancel
+            </button>
+            <button
+              disabled={isSubmitting}
+              className="w-full p-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+              type="submit"
+            >
+              {isSubmitting ? "Loading..." : "Submit"}
+            </button>
+          </div>
         </form>
       </div>
     </div>
