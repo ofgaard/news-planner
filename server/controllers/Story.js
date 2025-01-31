@@ -101,8 +101,40 @@ const getFromId = async (id) => {
   }
 };
 
+const submitStory = async (
+  title,
+  description,
+  journalistIds,
+  publishBy,
+  topic
+) => {
+  try {
+    publishBy = new Date(publishBy).toISOString();
+    const story = await prisma.story.create({
+      data: {
+        title,
+        description,
+        publishBy,
+        topic,
+        journalists: {
+          create: journalistIds.map((id) => ({
+            user: {
+              connect: { id: parseInt(id, 10) },
+            },
+          })),
+        },
+      },
+    });
+    return story;
+  } catch (error) {
+    console.error("Error creating story:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   getStoriesFromDate,
   getStoriesForWeek,
   getFromId,
+  submitStory,
 };
