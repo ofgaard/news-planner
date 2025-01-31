@@ -1,99 +1,37 @@
 import { FormButton } from "./UI/FormButton";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
 import { formatDate } from "../utils/formatDate";
 import { useSubmitStory } from "../hooks/useSubmitStory";
+import { useFetchTopics } from "../hooks/useFetchTopics";
 
 export const AddForm = ({ onClose }) => {
-  const { submitStory } = useSubmitStory();
-  const [formInput, setFormInput] = useState({
-    title: "",
-    description: "",
-    userId: "",
-    date: "",
-  });
+  const { register, handleSubmit } = useForm();
 
-  const handleInput = (e) => {
-    setFormInput({
-      ...formInput,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formattedDate = formatDate(formInput.date);
-    const formData = {
-      ...formInput,
-      date: formattedDate,
-    };
-
-    try {
-      console.log(formData);
-      await submitStory(formData);
-      onClose();
-    } catch (err) {
-      console.log(err);
-    }
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
-    <div className="fixed z-50 inset-0 flex justify-center mt-28">
-      <div className="border drop-shadow-xl max-h-60 w-96 py-4 px-3 rounded-md flex flex-col bg-white overflow-y-auto">
+    <div className="fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center">
+      <div className="bg-white w-96  p-8 rounded-lg max-h-64 overflow-y-auto mt-20">
+        <h1 className="text-2xl font-bold">Add Story</h1>
         <form
-          action="submit"
-          method="post"
-          id="add_story"
-          className="flex flex-col gap-2 flex-1"
+          className="flex flex-col gap-4 mt-4"
+          onSubmit={handleSubmit(onSubmit)}
         >
+          <input {...register("title")} type="text" placeholder="Title" />
           <input
+            {...register("description")}
             type="text"
-            name="title"
-            value={formInput.title}
-            placeholder="Title"
-            onChange={handleInput}
-          />
-          <input
-            name="description"
-            type="text"
-            value={formInput.description}
             placeholder="Description"
-            onChange={handleInput}
-          />
-          <input
-            name="userId"
-            type="input"
-            value={formInput.userId}
-            placeholder="Journalist (user userId for now)"
-            onChange={handleInput}
-          />
-          <input
-            type="date"
-            name="date"
-            value={formInput.date}
-            className="text-xs"
-            onChange={handleInput}
-          />
-          <div className="flex gap-1 flex-wrap">
-            <p className="text-xs bg-neutral-200 bg-opacity-35 border rounded-md px-1.5">
-              User
-            </p>
-            <p className="text-xs bg-neutral-200 bg-opacity-35 border rounded-md px-1.5">
-              User
-            </p>
-          </div>
-          <div className="flex ml-auto mt-auto gap-2">
-            <FormButton
-              text={"Cancel"}
-              onClick={onClose}
-              color={"bg-neutral-200"}
-            ></FormButton>
-            <FormButton
-              text={"Submit"}
-              onClick={handleSubmit}
-              color={"bg-lime-700"}
-              textColor={"text-white"}
-            ></FormButton>
-          </div>
+          ></input>
+          {/* make a multiple selection option for journalists from a drop down */}
+          <input type="text" placeholder="Journalist" />
+          <button className="mt-auto ml-auto" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </div>

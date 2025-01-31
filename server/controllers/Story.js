@@ -4,6 +4,7 @@ const prisma = require("../config/PrismaClient");
 const getStoriesFromDate = async (dateParam) => {
   try {
     const date = new Date(dateParam);
+
     if (isNaN(date)) {
       throw new Error("Invalid date");
     }
@@ -104,5 +105,4 @@ module.exports = {
   getStoriesFromDate,
   getStoriesForWeek,
   getFromId,
-  submitStory,
 };

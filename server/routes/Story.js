@@ -29,7 +29,7 @@ router.get("/story/:id", async (req, res) => {
 });
 
 router.post("/submit/", async (req, res) => {
-  const { title, description, journalistIds, topic } = req.body;
+  const { title, description, journalistIds, publishBy, topic } = req.body;
   const result = await StoryController.submitStory(
     title,
     description,

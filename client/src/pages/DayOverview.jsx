@@ -5,8 +5,11 @@ import { StoryCounter } from "../components/UI/StoryCounter";
 import { StoryTimeOfCreation } from "../components/UI/StoryTimeOfCreation";
 import { StoryListJournalists } from "../components/UI/StoryListJournalists";
 import { GoToStory } from "../components/UI/Buttons/GoToStory";
+import { useFetchAllUsers } from "../hooks/useFetchAllUsers";
 
 export const DayOverview = () => {
+  const { users } = useFetchAllUsers();
+  console.log("users in frontend:", users);
   const { date } = useParams();
   const storiesDate = date || new Date().toLocaleDateString("en-CA");
 

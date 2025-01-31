@@ -32,6 +32,8 @@ model Story {
   publishBy   DateTime?
   topic       String?
   comments    Comment[]
+  Topic       Topic?        @relation(fields: [topicId], references: [id])
+  topicId     Int?
 
   @@index([publishBy])
   @@index([updatedAt])
@@ -54,4 +56,10 @@ model Comment {
   storyId   Int
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+}
+
+model Topic {
+  id    Int     @id @default(autoincrement())
+  name  String
+  story Story[]
 }
