@@ -1,19 +1,25 @@
 import { useParams } from "react-router";
+import { useEffect } from "react";
 import { useFetchStoriesByDate } from "../hooks/useFetchStoriesByDate";
 import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
 import { StoryCounter } from "../components/UI/StoryCounter";
 import { StoryTimeOfCreation } from "../components/UI/StoryTimeOfCreation";
 import { StoryListJournalists } from "../components/UI/StoryListJournalists";
 import { GoToStory } from "../components/UI/Buttons/GoToStory";
-import { useFetchAllUsers } from "../hooks/useFetchAllUsers";
+import { useSubmission } from "../context/SubmissionContext";
 
 export const DayOverview = () => {
-  const { users } = useFetchAllUsers();
-  console.log("users in frontend:", users);
   const { date } = useParams();
   const storiesDate = date || new Date().toLocaleDateString("en-CA");
+  const { newStorySubmitted } = useSubmission();
 
-  const { stories, loading } = useFetchStoriesByDate(storiesDate);
+  const { stories, loading, loadStories } = useFetchStoriesByDate(storiesDate);
+
+  useEffect(() => {
+    if (newStorySubmitted) {
+      loadStories();
+    }
+  }, [newStorySubmitted]);
 
   if (loading) {
     return <p>Loading ... </p>;
