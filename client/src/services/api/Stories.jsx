@@ -34,6 +34,15 @@ export const fetchStoryById = async (id) => {
   }
 };
 
+export const fetchStoriesByTopic = async (topic) => {
+  try {
+    const response = await fetch(`${URL}topic/${topic}`);
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 export const addStory = async (storyData) => {
   try {
     const response = await fetch(`${URL}submit/`, {

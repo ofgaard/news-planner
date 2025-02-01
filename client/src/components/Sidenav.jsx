@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ProfileIcon } from "./UI/ProfileIcon";
 import { MenuItem } from "./UI/MenuItem";
-import { MenuListItem } from "./UI/MenuListItem";
+import { MenuItemTopic } from "./UI/MenuItemTopic";
 import { AddForm } from "./AddForm";
 import { CgAdd } from "react-icons/cg";
 import { CgSearch } from "react-icons/cg";
@@ -40,10 +40,10 @@ export const Sidenav = () => {
             iconColor="darkgreen"
           ></MenuLink>
           <ul className="pl-2 pt-2">
-            <MenuListItem content="Breaking"></MenuListItem>
-            <MenuListItem content="Politik"></MenuListItem>
-            <MenuListItem content="Krim"></MenuListItem>
-            <MenuListItem content="Samfund"></MenuListItem>
+            <MenuItemTopic label={"Breaking"}></MenuItemTopic>
+            <MenuItemTopic label={"Politik"}></MenuItemTopic>
+            <MenuItemTopic label={"Krim"}></MenuItemTopic>
+            <MenuItemTopic label={"Samfund"}></MenuItemTopic>
           </ul>
         </div>
         <div>
@@ -53,12 +53,7 @@ export const Sidenav = () => {
             label="Week"
             iconColor="darkgreen"
           ></MenuLink>
-          <ul className="pl-2 pt-2">
-            <MenuListItem content="Breaking"></MenuListItem>
-            <MenuListItem content="Politik"></MenuListItem>
-            <MenuListItem content="Krim"></MenuListItem>
-            <MenuListItem content="Samfund"></MenuListItem>
-          </ul>
+          <ul className="pl-2 pt-2"></ul>
         </div>
         <div>
           <MenuItem

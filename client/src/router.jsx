@@ -27,6 +27,10 @@ export const router = createBrowserRouter([
         path: "story/:id",
         element: <StoryOverview></StoryOverview>,
       },
+      {
+        path: "day/:date/:topic",
+        element: <DayOverview></DayOverview>,
+      },
     ],
   },
 ]);
