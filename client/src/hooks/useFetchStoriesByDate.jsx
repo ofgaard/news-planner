@@ -9,6 +9,7 @@ export const useFetchStoriesByDate = (date) => {
   const loadStories = async () => {
     try {
       const data = await fetchStoriesByDate(date);
+
       setStories(data);
     } catch (error) {
       setError(error.message);

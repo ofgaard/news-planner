@@ -1,16 +1,23 @@
 import { useParams } from "react-router";
+import { useEffect } from "react";
 import { useFetchStoriesByWeek } from "../hooks/useFetchStoriesByWeek";
 import { WeekDay } from "../components/UI/Cards/WeekDay";
 import { GoToStory } from "../components/UI/Buttons/GoToStory";
 import { StoryCounter } from "../components/UI/StoryCounter";
 import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
+import { useSubmission } from "../context/SubmissionContext";
 
 export const WeekOverview = () => {
+  const { newStorySubmitted } = useSubmission();
   const { startDate } = useParams();
   const storiesDate = startDate || new Date().toLocaleDateString("en-CA");
-  const { stories, loading } = useFetchStoriesByWeek(storiesDate);
+  const { stories, loading, loadStories } = useFetchStoriesByWeek(storiesDate);
 
-  console.log(stories);
+  useEffect(() => {
+    if (newStorySubmitted) {
+      loadStories();
+    }
+  }, [newStorySubmitted]);
 
   if (loading) {
     return <p>Loading ...</p>;
