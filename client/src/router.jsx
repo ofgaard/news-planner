@@ -6,6 +6,8 @@ import { WeekOverview } from "./Pages/WeekOverview";
 import { StoryOverview } from "./pages/StoryOverview";
 import { UsersOverview } from "./pages/UsersOverview";
 import { UserProfile } from "./pages/UserProfile";
+import { Login } from "./pages/Login";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -42,5 +44,9 @@ export const router = createBrowserRouter([
         element: <UserProfile></UserProfile>,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
   },
 ]);

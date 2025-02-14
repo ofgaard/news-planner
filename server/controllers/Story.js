@@ -119,7 +119,7 @@ const submitStory = async (
         journalists: {
           create: journalistIds.map((id) => ({
             user: {
-              connect: { id: parseInt(id, 10) },
+              connect: { id },
             },
           })),
         },
