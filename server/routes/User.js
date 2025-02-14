@@ -9,4 +9,9 @@ router.get("/", async (req, res) => {
   res.json(users);
 });
 
+router.get("/:id", async (req, res) => {
+  const user = await userController.getUserById(req.params.id);
+  res.json(user);
+});
+
 module.exports = router;

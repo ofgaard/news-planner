@@ -12,7 +12,8 @@ export const useFetchAllUsers = () => {
       try {
         const data = await getAllUsers();
 
-        setUsers(data);
+        const sortedUsers = data.sort((a, b) => a.name.localeCompare(b.name));
+        setUsers(sortedUsers);
       } catch (error) {
         setError(error.message);
       } finally {

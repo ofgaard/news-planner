@@ -56,11 +56,12 @@ export const Sidenav = () => {
           <ul className="pl-2 pt-2"></ul>
         </div>
         <div>
-          <MenuItem
+          <MenuLink
+            link={`/users/all/`}
             icon={PiUsersThree}
-            content="Reporters"
+            label="Reporters"
             iconColor="darkgreen"
-          ></MenuItem>
+          ></MenuLink>
         </div>
         {addFormVisible && <AddForm onClose={() => setAddFormVisible(false)} />}
       </div>

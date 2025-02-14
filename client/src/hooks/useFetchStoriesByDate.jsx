@@ -3,10 +3,11 @@ import { fetchStoriesByDate } from "../services/api/Stories";
 
 export const useFetchStoriesByDate = (date) => {
   const [stories, setStories] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const loadStories = async () => {
+    setLoading(true);
     try {
       const data = await fetchStoriesByDate(date);
 

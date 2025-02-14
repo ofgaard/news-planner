@@ -9,3 +9,13 @@ export const getAllUsers = async () => {
     console.log(error);
   }
 };
+
+export const getUserById = async (id) => {
+  try {
+    const response = await fetch(`${URL}${id}`);
+    const user = response.json();
+    return user;
+  } catch (err) {
+    console.log(err);
+  }
+};

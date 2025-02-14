@@ -4,6 +4,8 @@ import { Error } from "./pages/Error";
 import { DayOverview } from "./pages/DayOverview";
 import { WeekOverview } from "./Pages/WeekOverview";
 import { StoryOverview } from "./pages/StoryOverview";
+import { UsersOverview } from "./pages/UsersOverview";
+import { UserProfile } from "./pages/UserProfile";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +32,14 @@ export const router = createBrowserRouter([
       {
         path: "day/:date/:topic",
         element: <DayOverview></DayOverview>,
+      },
+      {
+        path: "/users/all",
+        element: <UsersOverview></UsersOverview>,
+      },
+      {
+        path: "/users/:id",
+        element: <UserProfile></UserProfile>,
       },
     ],
   },

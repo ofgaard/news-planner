@@ -21,9 +21,7 @@ export const DayOverview = () => {
 
   useEffect(() => {
     if (newStorySubmitted) {
-      setTimeout(() => {
-        loadStories();
-      }, 200);
+      loadStories();
     }
   }, [newStorySubmitted]);
 
