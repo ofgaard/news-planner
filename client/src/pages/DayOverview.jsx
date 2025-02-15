@@ -32,7 +32,10 @@ export const DayOverview = () => {
   return (
     <div className="flex flex-col p-10 ">
       <div className="flex flex-col gap-1 mb-5">
-        <DayOfWeek date={storiesDate}></DayOfWeek>
+        <div className="flex justify-between items-center">
+          <DayOfWeek date={storiesDate}></DayOfWeek>
+          {topic && <h1 className="font-extrabold">#{topic}</h1>}
+        </div>
         <StoryCounter stories={stories}></StoryCounter>
       </div>
 

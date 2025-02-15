@@ -1,8 +1,10 @@
-import { useParams } from "react-router";
+import { useParams, Link } from "react-router";
 import { useEffect } from "react";
 import { useFetchStoriesByWeek } from "../hooks/useFetchStoriesByWeek";
 import { WeekDay } from "../components/UI/Cards/WeekDay";
 import { useSubmission } from "../context/SubmissionContext";
+import { browseWeeks } from "../utils/browseWeeks";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export const WeekOverview = () => {
   const { newStorySubmitted } = useSubmission();
@@ -12,9 +14,7 @@ export const WeekOverview = () => {
 
   useEffect(() => {
     if (newStorySubmitted) {
-      setTimeout(() => {
-        loadStories();
-      }, 200);
+      loadStories();
     }
   }, [newStorySubmitted]);
 
@@ -24,7 +24,19 @@ export const WeekOverview = () => {
 
   return (
     <div className="flex flex-col p-10">
-      <h1 className="font-extrabold text-xl">Week</h1>
+      <div className="flex gap-2 items-center">
+        <Link to={`/week/${browseWeeks(storiesDate, -1)}`}>
+          {" "}
+          <FaArrowLeft size={10}></FaArrowLeft>{" "}
+        </Link>
+        <h1 className="font-extrabold text-xl">
+          {storiesDate} - {browseWeeks(storiesDate, 1)}
+        </h1>
+        <Link to={`/week/${browseWeeks(storiesDate, 1)}`}>
+          {" "}
+          <FaArrowRight size={10}></FaArrowRight>{" "}
+        </Link>
+      </div>
 
       <div className="flex flex-row gap-2 mt-20">
         {stories.map((day, index) => (

@@ -7,6 +7,7 @@ import { CgAdd } from "react-icons/cg";
 import { CgSearch } from "react-icons/cg";
 import { CgCalendarToday } from "react-icons/cg";
 import { CgCalendarDates } from "react-icons/cg";
+import { BiCalendarWeek } from "react-icons/bi";
 import { PiUsersThree } from "react-icons/pi";
 import { MenuLink } from "./UI/MenuLink";
 
@@ -49,10 +50,11 @@ export const Sidenav = () => {
         <div>
           <MenuLink
             link={`/week/`}
-            icon={CgCalendarDates}
+            icon={BiCalendarWeek}
             label="Week"
             iconColor="darkgreen"
           ></MenuLink>
+
           <ul className="pl-2 pt-2"></ul>
         </div>
         <div>
