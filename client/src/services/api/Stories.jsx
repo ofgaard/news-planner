@@ -58,3 +58,15 @@ export const addStory = async (storyData) => {
     console.log(error);
   }
 };
+
+export const searchStory = async (query) => {
+  try {
+    const response = await fetch(
+      `${URL}search/?query=${encodeURIComponent(query)}`
+    );
+    const result = await response.json();
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};

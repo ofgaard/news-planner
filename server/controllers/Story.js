@@ -101,6 +101,33 @@ const getFromId = async (id) => {
   }
 };
 
+const searchStories = async (query) => {
+  try {
+    const result = await prisma.story.findMany({
+      where: {
+        OR: [
+          {
+            title: { contains: query, mode: "insensitive" },
+          },
+          {
+            description: { contains: query, mode: "insensitive" },
+          },
+        ],
+      },
+      include: {
+        Topic: true,
+        journalists: {
+          include: { user: true },
+        },
+        comments: true,
+      },
+    });
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const submitStory = async (
   title,
   description,
@@ -137,4 +164,5 @@ module.exports = {
   getStoriesForWeek,
   getFromId,
   submitStory,
+  searchStories,
 };

@@ -105,7 +105,7 @@ export const AddForm = ({ onClose }) => {
             </button>
             <button
               disabled={isSubmitting}
-              className="w-full p-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-gray-400"
+              className="w-full p-2 text-white bg-green-700 rounded-md hover:bg-green-800 disabled:bg-gray-400"
               type="submit"
             >
               {isSubmitting ? "Loading..." : "Submit"}

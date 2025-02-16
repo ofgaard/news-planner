@@ -31,7 +31,7 @@ export const Sidenav = () => {
             iconColor="darkgreen"
             onClick={toggleForm}
           ></MenuItem>
-          <MenuItem icon={CgSearch} content="Search"></MenuItem>
+          <MenuLink link={`/search/`} icon={CgSearch} label="Search"></MenuLink>
         </div>
         <div>
           <MenuLink

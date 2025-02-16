@@ -4,7 +4,7 @@ import { useFetchStoriesByDate } from "../hooks/useFetchStoriesByDate";
 import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
 import { StoryCounter } from "../components/UI/StoryCounter";
 import { useSubmission } from "../context/SubmissionContext";
-import { ShowStoriesByDay } from "../components/UI/ShowStoriesByDay";
+import { StoryCard } from "../components/UI/Cards/StoryCard";
 
 export const DayOverview = () => {
   const { date, topic } = useParams();
@@ -36,13 +36,15 @@ export const DayOverview = () => {
           <DayOfWeek date={storiesDate}></DayOfWeek>
           {topic && <h1 className="font-extrabold">#{topic}</h1>}
         </div>
-        <StoryCounter stories={stories}></StoryCounter>
+        {topic ? (
+          <StoryCounter stories={storiesToRender}></StoryCounter>
+        ) : (
+          <StoryCounter stories={stories}></StoryCounter>
+        )}
       </div>
 
       {storiesToRender.map((story) => {
-        return (
-          <ShowStoriesByDay key={story.id} story={story}></ShowStoriesByDay>
-        );
+        return <StoryCard key={story.id} story={story}></StoryCard>;
       })}
     </div>
   );

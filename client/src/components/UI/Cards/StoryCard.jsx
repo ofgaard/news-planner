@@ -1,9 +1,10 @@
-import { StoryTopic } from "./StoryTopic";
-import { StoryListJournalists } from "./StoryListJournalists";
-import { StoryTimeOfCreation } from "./StoryTimeOfCreation";
-import { GoToStory } from "./Buttons/GoToStory";
+import { StoryTopic } from "../StoryTopic";
+import { StoryListJournalists } from "../StoryListJournalists";
+import { StoryTimeOfCreation } from "../StoryTimeOfCreation";
+import { StoryDateOfCreation } from "../StoryDateOfCreation";
+import { GoToStory } from "../Buttons/GoToStory";
 
-export const ShowStoriesByDay = ({ story }) => {
+export const StoryCard = ({ story, showDate }) => {
   if (story) {
     return (
       <div
@@ -16,12 +17,14 @@ export const ShowStoriesByDay = ({ story }) => {
         </div>
         <div className="flex flex-col gap-1 text-neutral-600">
           <StoryListJournalists story={story}></StoryListJournalists>
-          <div>
+          <div className="flex gap-2">
             <StoryTimeOfCreation time={story.createdAt}></StoryTimeOfCreation>
+            {showDate && (
+              <StoryDateOfCreation date={story.createdAt}></StoryDateOfCreation>
+            )}{" "}
           </div>
         </div>
         <p className="max-w-4xl">{story.description}</p>
-
         <GoToStory story={story}></GoToStory>
       </div>
     );

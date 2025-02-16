@@ -7,6 +7,23 @@ router.get("/", (req, res) => {
   res.json({ message: "Hello world" });
 });
 
+router.get("/search", async (req, res) => {
+  const { query } = req.query;
+
+  try {
+    const stories = await StoryController.searchStories(query);
+
+    if (!stories || stories.length === 0) {
+      console.log("No stories found");
+      return res.status(200).json([]);
+    }
+
+    return res.status(200).json(stories);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
 router.get("/:date?", async (req, res) => {
   try {
     const dateParam = req.params.date || new Date().toISOString().split("T")[0];
@@ -14,7 +31,6 @@ router.get("/:date?", async (req, res) => {
     res.json(stories);
   } catch (error) {
     console.error("Error fetching stories:", error);
-    res.status(500).json({ message: "Error fetching stories" });
   }
 });
 
