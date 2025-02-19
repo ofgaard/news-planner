@@ -3,8 +3,9 @@ import { StoryListJournalists } from "../StoryListJournalists";
 import { StoryTimeOfCreation } from "../StoryTimeOfCreation";
 import { StoryDateOfCreation } from "../StoryDateOfCreation";
 import { GoToStory } from "../Buttons/GoToStory";
+import { DeleteStory } from "../Buttons/DeleteStory";
 
-export const StoryCard = ({ story, showDate }) => {
+export const StoryCard = ({ story, onDelete, showDate }) => {
   if (story) {
     return (
       <div
@@ -25,7 +26,10 @@ export const StoryCard = ({ story, showDate }) => {
           </div>
         </div>
         <p className="max-w-4xl">{story.description}</p>
-        <GoToStory story={story}></GoToStory>
+        <div className="flex ml-auto gap-2 items-center">
+          <GoToStory story={story}></GoToStory>
+          <DeleteStory id={story.id} onDelete={onDelete}></DeleteStory>
+        </div>
       </div>
     );
   }

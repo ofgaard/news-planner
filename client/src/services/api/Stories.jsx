@@ -70,3 +70,13 @@ export const searchStory = async (query) => {
     console.log(err);
   }
 };
+
+export const deleteStory = async (id) => {
+  try {
+    const response = await fetch(`${URL}story/${id}`, { method: "DELETE" });
+    const result = await response.json();
+    console.log(result);
+  } catch (err) {
+    console.log(err);
+  }
+};

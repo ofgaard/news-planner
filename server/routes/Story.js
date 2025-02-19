@@ -7,6 +7,12 @@ router.get("/", (req, res) => {
   res.json({ message: "Hello world" });
 });
 
+router.delete("/story/:id", async (req, res) => {
+  console.log(req.params.id);
+  const response = await StoryController.deleteStory(req.params.id);
+  res.json(response);
+});
+
 router.get("/search", async (req, res) => {
   const { query } = req.query;
 

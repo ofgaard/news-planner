@@ -1,22 +1,14 @@
 import { useParams, Link } from "react-router";
-import { useEffect } from "react";
 import { useFetchStoriesByWeek } from "../hooks/useFetchStoriesByWeek";
 import { WeekDay } from "../components/UI/Cards/WeekDay";
-import { useSubmission } from "../context/SubmissionContext";
 import { browseWeeks } from "../utils/browseWeeks";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export const WeekOverview = () => {
-  const { newStorySubmitted } = useSubmission();
   const { startDate } = useParams();
   const storiesDate = startDate || new Date().toLocaleDateString("en-CA");
-  const { stories, loading, loadStories } = useFetchStoriesByWeek(storiesDate);
-
-  useEffect(() => {
-    if (newStorySubmitted) {
-      loadStories();
-    }
-  }, [newStorySubmitted]);
+  const { stories, loading } = useFetchStoriesByWeek(storiesDate);
+  console.log(stories);
 
   if (loading) {
     return <p>Loading ... </p>;

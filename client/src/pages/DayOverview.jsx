@@ -1,29 +1,24 @@
 import { useParams } from "react-router";
-import { useEffect } from "react";
+import { useState } from "react";
 import { useFetchStoriesByDate } from "../hooks/useFetchStoriesByDate";
 import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
 import { StoryCounter } from "../components/UI/StoryCounter";
-import { useSubmission } from "../context/SubmissionContext";
 import { StoryCard } from "../components/UI/Cards/StoryCard";
 
 export const DayOverview = () => {
   const { date, topic } = useParams();
   const storiesDate = date || new Date().toLocaleDateString("en-CA");
-  const { newStorySubmitted } = useSubmission();
+  const { stories, setStories, loading } = useFetchStoriesByDate(storiesDate);
 
-  const { stories, loading, loadStories } = useFetchStoriesByDate(storiesDate);
+  const handleDelete = (id) => {
+    setStories((prevStories) => prevStories.filter((story) => story.id !== id));
+  };
 
   let storiesToRender = stories;
 
   if (topic) {
     storiesToRender = stories.filter((story) => story.topic === topic);
   }
-
-  useEffect(() => {
-    if (newStorySubmitted) {
-      loadStories();
-    }
-  }, [newStorySubmitted]);
 
   if (loading) {
     return <p>Loading ... </p>;
@@ -44,7 +39,13 @@ export const DayOverview = () => {
       </div>
 
       {storiesToRender.map((story) => {
-        return <StoryCard key={story.id} story={story}></StoryCard>;
+        return (
+          <StoryCard
+            key={story.id}
+            story={story}
+            onDelete={handleDelete}
+          ></StoryCard>
+        );
       })}
     </div>
   );

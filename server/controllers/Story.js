@@ -128,6 +128,27 @@ const searchStories = async (query) => {
   }
 };
 
+const deleteStory = async (id) => {
+  try {
+    console.log(id);
+    const response = await prisma.story.delete({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        journalists: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const submitStory = async (
   title,
   description,
@@ -165,4 +186,5 @@ module.exports = {
   getFromId,
   submitStory,
   searchStories,
+  deleteStory,
 };
