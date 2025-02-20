@@ -6,21 +6,22 @@ export const useFetchStoriesByDate = (date) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const loadStories = async () => {
-      setLoading(true);
-      try {
-        const data = await fetchStoriesByDate(date);
+  const loadStories = async () => {
+    setLoading(true);
+    try {
+      const data = await fetchStoriesByDate(date);
 
-        setStories(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+      setStories(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     loadStories();
   }, [date]);
 
-  return { stories, setStories, loading, error };
+  return { stories, loading, error, loadStories };
 };

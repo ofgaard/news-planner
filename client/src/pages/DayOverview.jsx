@@ -1,6 +1,7 @@
 import { useParams } from "react-router";
-import { useState } from "react";
-import { useFetchStoriesByDate } from "../hooks/useFetchStoriesByDate";
+import { useEffect } from "react";
+import { useStories } from "../context/StoryContext";
+
 import { DayOfWeek } from "../components/UI/ShowDayOfWeek";
 import { StoryCounter } from "../components/UI/StoryCounter";
 import { StoryCard } from "../components/UI/Cards/StoryCard";
@@ -8,19 +9,23 @@ import { StoryCard } from "../components/UI/Cards/StoryCard";
 export const DayOverview = () => {
   const { date, topic } = useParams();
   const storiesDate = date || new Date().toLocaleDateString("en-CA");
-  const { stories, setStories, loading } = useFetchStoriesByDate(storiesDate);
+  const { storiesByDate, updateDate, loadingDailyStories } = useStories();
 
-  const handleDelete = (id) => {
-    setStories((prevStories) => prevStories.filter((story) => story.id !== id));
-  };
+  // const handleDelete = (id) => {
+  //   setStories((prevStories) => prevStories.filter((story) => story.id !== id));
+  // };
 
-  let storiesToRender = stories;
+  useEffect(() => {
+    updateDate(storiesDate);
+  }, [storiesDate, updateDate]);
+
+  let storiesToRender = storiesByDate;
 
   if (topic) {
-    storiesToRender = stories.filter((story) => story.topic === topic);
+    storiesToRender = storiesByDate.filter((story) => story.topic === topic);
   }
 
-  if (loading) {
+  if (loadingDailyStories || !Array.isArray(storiesByDate)) {
     return <p>Loading ... </p>;
   }
 
@@ -34,7 +39,7 @@ export const DayOverview = () => {
         {topic ? (
           <StoryCounter stories={storiesToRender}></StoryCounter>
         ) : (
-          <StoryCounter stories={stories}></StoryCounter>
+          <StoryCounter stories={storiesByDate}></StoryCounter>
         )}
       </div>
 
@@ -43,7 +48,7 @@ export const DayOverview = () => {
           <StoryCard
             key={story.id}
             story={story}
-            onDelete={handleDelete}
+            // onDelete={handleDelete}
           ></StoryCard>
         );
       })}

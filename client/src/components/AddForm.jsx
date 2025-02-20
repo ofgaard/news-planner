@@ -2,11 +2,13 @@ import { useSubmitStory } from "../hooks/useSubmitStory";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useFetchAllUsers } from "../hooks/useFetchAllUsers";
+import { useStories } from "../context/StoryContext";
 import { useFetchTopics } from "../hooks/useFetchTopics";
 import Select from "react-select";
 
 export const AddForm = ({ onClose }) => {
   const { submitStory } = useSubmitStory();
+  const { refreshStories } = useStories();
   const { users } = useFetchAllUsers();
   const { topics } = useFetchTopics();
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -21,6 +23,7 @@ export const AddForm = ({ onClose }) => {
   const onSubmit = async (data) => {
     data.journalists = selectedUsers.map((user) => user.value);
     await submitStory(data);
+    refreshStories();
     onClose();
   };
 
