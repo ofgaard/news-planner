@@ -22,13 +22,21 @@ export const StoriesProvider = ({ children }) => {
   };
 
   const refreshStories = async () => {
-    const updatedStoriesByDate = await fetchDailyStories();
-    setStoriesByDate(updatedStoriesByDate);
+    await fetchDailyStories();
+    setStoriesByDate((prevStories) =>
+      prevStories.filter((story) => story.id !== null)
+    );
   };
 
   return (
     <StoriesContext.Provider
-      value={{ storiesByDate, refreshStories, updateDate, loadingDailyStories }}
+      value={{
+        storiesByDate,
+        setStoriesByDate,
+        refreshStories,
+        updateDate,
+        loadingDailyStories,
+      }}
     >
       {children}
     </StoriesContext.Provider>

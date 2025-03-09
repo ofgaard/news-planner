@@ -1,9 +1,9 @@
-import { useSubmitStory } from "../hooks/useSubmitStory";
+import { useSubmitStory } from "../../hooks/useSubmitStory";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useFetchAllUsers } from "../hooks/useFetchAllUsers";
-import { useStories } from "../context/StoryContext";
-import { useFetchTopics } from "../hooks/useFetchTopics";
+import { useFetchAllUsers } from "../../hooks/useFetchAllUsers";
+import { useStories } from "../../context/StoryContext";
+import { useFetchTopics } from "../../hooks/useFetchTopics";
 import Select from "react-select";
 
 export const AddForm = ({ onClose }) => {

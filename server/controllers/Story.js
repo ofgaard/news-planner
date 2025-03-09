@@ -180,6 +180,28 @@ const submitStory = async (
   }
 };
 
+const editStory = async (id, updates) => {
+  try {
+    const storyId = parseInt(id);
+    if (isNaN(storyId)) throw new Error("Invalid story ID");
+
+    const updatedStory = await prisma.story.update({
+      where: { id: storyId },
+      data: updates,
+      include: {
+        journalists: {
+          include: { user: true },
+        },
+      },
+    });
+
+    return updatedStory;
+  } catch (error) {
+    console.error("Error updating story:", error);
+    throw error;
+  }
+};
+
 module.exports = {
   getStoriesFromDate,
   getStoriesForWeek,
@@ -187,4 +209,5 @@ module.exports = {
   submitStory,
   searchStories,
   deleteStory,
+  editStory,
 };

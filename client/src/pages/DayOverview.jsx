@@ -9,11 +9,14 @@ import { StoryCard } from "../components/UI/Cards/StoryCard";
 export const DayOverview = () => {
   const { date, topic } = useParams();
   const storiesDate = date || new Date().toLocaleDateString("en-CA");
-  const { storiesByDate, updateDate, loadingDailyStories } = useStories();
+  const { storiesByDate, setStoriesByDate, updateDate, loadingDailyStories } =
+    useStories();
 
-  // const handleDelete = (id) => {
-  //   setStories((prevStories) => prevStories.filter((story) => story.id !== id));
-  // };
+  const handleDelete = (id) => {
+    setStoriesByDate((prevStories) =>
+      prevStories.filter((story) => story.id !== id)
+    );
+  };
 
   useEffect(() => {
     updateDate(storiesDate);
@@ -25,7 +28,7 @@ export const DayOverview = () => {
     storiesToRender = storiesByDate.filter((story) => story.topic === topic);
   }
 
-  if (loadingDailyStories || !Array.isArray(storiesByDate)) {
+  if (loadingDailyStories) {
     return <p>Loading ... </p>;
   }
 
@@ -48,7 +51,7 @@ export const DayOverview = () => {
           <StoryCard
             key={story.id}
             story={story}
-            // onDelete={handleDelete}
+            onDelete={handleDelete}
           ></StoryCard>
         );
       })}

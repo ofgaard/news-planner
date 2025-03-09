@@ -80,3 +80,23 @@ export const deleteStory = async (id) => {
     console.log(err);
   }
 };
+
+export const editStory = async (id, updates) => {
+  try {
+    const response = await fetch(`${URL}story/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updates),
+    });
+    if (!response.ok) {
+      throw new Error("failed to update");
+    }
+    const updatedStory = await response.json();
+    return updatedStory;
+  } catch (error) {
+    console.error("error updating", error);
+    throw error;
+  }
+};

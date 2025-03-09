@@ -5,7 +5,10 @@ export const GoToStory = ({ story }) => {
   return (
     <>
       <Link to={`/story/${story.id}`}>
-        <FaExternalLinkAlt size={15} className="ml-auto"></FaExternalLinkAlt>
+        <FaExternalLinkAlt
+          size={15}
+          className="text-neutral-950 hover:text-neutral-600"
+        ></FaExternalLinkAlt>
       </Link>
     </>
   );

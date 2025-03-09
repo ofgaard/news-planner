@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ProfileIcon } from "./UI/ProfileIcon";
 import { MenuItem } from "./UI/MenuItem";
 import { MenuItemTopic } from "./UI/MenuItemTopic";
-import { AddForm } from "./AddForm";
+import { AddForm } from "./Forms/AddForm";
 import { CgAdd } from "react-icons/cg";
 import { CgSearch } from "react-icons/cg";
 import { CgCalendarToday } from "react-icons/cg";

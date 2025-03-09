@@ -7,6 +7,13 @@ router.get("/", (req, res) => {
   res.json({ message: "Hello world" });
 });
 
+router.patch("/story/:id", async (req, res) => {
+  console.log(req.url);
+  const story = req.body;
+  const response = await StoryController.editStory(req.params.id, story);
+  res.json(response);
+});
+
 router.delete("/story/:id", async (req, res) => {
   console.log(req.params.id);
   const response = await StoryController.deleteStory(req.params.id);
