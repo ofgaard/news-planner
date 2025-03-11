@@ -1,7 +1,15 @@
 import { useState } from "react";
 import { useEditStory } from "../../hooks/useEditStory";
+import { FormCancel } from "../UI/Buttons/FormCancel";
+import { FormSubmit } from "../UI/Buttons/FormSubmit";
 
-export const EditStory = ({ storyId, field, initialValue }) => {
+export const EditStory = ({
+  storyId,
+  field,
+  initialValue,
+  toggleEditMode,
+  setStory,
+}) => {
   const [input, setInput] = useState(initialValue || "");
   const { editStoryById, loading } = useEditStory();
 
@@ -13,21 +21,23 @@ export const EditStory = ({ storyId, field, initialValue }) => {
     if (!input.trim()) return alert("Please fill out the field");
     try {
       await editStoryById(storyId, { [field]: input });
-      alert("Story updated");
+      setStory((prev) => ({ ...prev, [field]: input }));
+      toggleEditMode(field);
     } catch (error) {
       alert("Failed to update:", error);
     }
   };
   return (
-    <div>
+    <div className="flex flex-col">
       <textarea
         value={input}
         onChange={handleInput}
-        placeholder="write some stuff here"
+        className="border rounded-md pl-1"
       ></textarea>
-      <button onClick={handleSubmit} disabled={loading}>
-        {loading ? "Updating..." : "Update"}
-      </button>
+      <div className="flex ml-auto gap-1 mt-3">
+        <FormCancel action={() => toggleEditMode(field)}></FormCancel>
+        <FormSubmit submitFunction={handleSubmit}></FormSubmit>
+      </div>
     </div>
   );
 };

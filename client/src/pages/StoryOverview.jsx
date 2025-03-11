@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { useFetchStoryById } from "../hooks/useFetchStoryById";
 import { StoryListJournalists } from "../components/UI/StoryListJournalists";
@@ -10,11 +10,21 @@ import { EditStory } from "../components/Forms/EditStory";
 
 export const StoryOverview = () => {
   const { id } = useParams();
-  const { story } = useFetchStoryById(id);
-  const [editMode, setEditMode] = useState(false);
+  const { story: initialStory } = useFetchStoryById(id);
+  const [story, setStory] = useState(null);
+  const [editMode, setEditMode] = useState({
+    title: false,
+    description: false,
+  });
 
-  const toggleEditMode = () => {
-    setEditMode((prev) => !prev);
+  useEffect(() => {
+    if (initialStory) {
+      setStory(initialStory);
+    }
+  }, [initialStory]);
+
+  const toggleEditMode = (field) => {
+    setEditMode((prev) => ({ ...prev, [field]: !prev[field] }));
   };
 
   if (!story) {
@@ -23,11 +33,19 @@ export const StoryOverview = () => {
 
   return (
     <div className="flex flex-col p-10 gap-1">
-      <h1 onClick={toggleEditMode}>Edit</h1>
       <div className="flex items-center justify-between">
-        <h1 className="text-4xl font-extrabold">
-          {editMode ? (
-            <EditStory storyId={id} field="title" initialValue={story.title} />
+        <h1
+          className="text-4xl font-extrabold"
+          onClick={() => !editMode.title && toggleEditMode("title")}
+        >
+          {editMode.title ? (
+            <EditStory
+              storyId={id}
+              field="title"
+              initialValue={story.title}
+              toggleEditMode={toggleEditMode}
+              setStory={setStory}
+            />
           ) : (
             story.title
           )}
@@ -43,7 +61,22 @@ export const StoryOverview = () => {
       </div>
       <StoryTopic topic={story.topic}></StoryTopic>
 
-      <p className="text-md mt-5">{story.description}</p>
+      <p
+        className="text-md mt-5 max-w-6xl"
+        onClick={() => !editMode.description && toggleEditMode("description")}
+      >
+        {editMode.description ? (
+          <EditStory
+            storyId={id}
+            field="description"
+            initialValue={story.description}
+            toggleEditMode={toggleEditMode}
+            setStory={setStory}
+          />
+        ) : (
+          story.description
+        )}
+      </p>
     </div>
   );
 };

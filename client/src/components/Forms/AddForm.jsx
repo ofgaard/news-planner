@@ -4,7 +4,12 @@ import { useForm } from "react-hook-form";
 import { useFetchAllUsers } from "../../hooks/useFetchAllUsers";
 import { useStories } from "../../context/StoryContext";
 import { useFetchTopics } from "../../hooks/useFetchTopics";
-import Select from "react-select";
+import { FormSubmit } from "../UI/Buttons/FormSubmit";
+import { FormCancel } from "../UI/Buttons/FormCancel";
+import { Input } from "../UI/FormFields/Input";
+import { MultiSelect } from "../UI/FormFields/MultiSelect";
+import { Select } from "../UI/FormFields/Select";
+import { TextArea } from "../UI/FormFields/TextArea";
 
 export const AddForm = ({ onClose }) => {
   const { submitStory } = useSubmitStory();
@@ -35,80 +40,60 @@ export const AddForm = ({ onClose }) => {
           className="flex flex-col gap-4 mt-4"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <input
-            {...register("title", { required: "Title is required" })}
-            type="text"
-            placeholder="Title"
-            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <Input
+            label="Title"
+            name="title"
+            register={register}
+            validation={{ required: "Title is required" }}
           />
           {errors.title && (
             <p className="text-sm text-red-500">{errors.title.message}</p>
           )}
 
-          <textarea
-            {...register("description", {
-              required: "Description is required",
-            })}
-            placeholder="Description"
-            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          ></textarea>
+          <TextArea
+            label="Description"
+            name="description"
+            register={register}
+            validation={{ required: "Description is required" }}
+          />
           {errors.description && (
             <p className="text-sm text-red-500">{errors.description.message}</p>
           )}
 
-          <select
-            {...register("topic", { required: true })}
+          <Select
+            label="Select Topic"
+            name="topic"
+            options={topics}
+            register={register}
+            validation={{ required: true }}
             onChange={(e) =>
               setSelectedTopics([...selectedTopics, e.target.value])
             }
-            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="">Select Topic</option>
-            {topics.map((topic) => (
-              <option key={topic.id} value={topic.id}>
-                {topic}
-              </option>
-            ))}
-          </select>
+          />
 
-          <label className="text-gray-700">Select Journalists:</label>
-          <Select
+          <MultiSelect
+            label="Select Journalists"
             options={users.map((user) => ({
               value: user.id,
               label: user.name,
             }))}
-            isMulti
-            className="basic-multi-select"
-            classNamePrefix="select"
             onChange={setSelectedUsers}
           />
 
-          <label htmlFor="publishBy" className="text-gray-700">
-            Publish by:
-          </label>
-          <input
-            {...register("publishBy", { required: "Publish by is required" })}
+          <Input
+            label="Publish by"
+            name="publishBy"
             type="date"
-            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            register={register}
+            validation={{ required: "Publish by is required" }}
           />
           {errors.publishBy && (
             <p className="text-sm text-red-500">{errors.publishBy.message}</p>
           )}
-          <div className="flex gap-2 mt-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-full p-2 text-white bg-gray-500 rounded-md hover:bg-gray-600"
-            >
-              Cancel
-            </button>
-            <button
-              disabled={isSubmitting}
-              className="w-full p-2 text-white bg-green-700 rounded-md hover:bg-green-800 disabled:bg-gray-400"
-              type="submit"
-            >
-              {isSubmitting ? "Loading..." : "Submit"}
-            </button>
+
+          <div className="flex gap-2 mt-2 ml-auto">
+            <FormCancel action={onClose} />
+            <FormSubmit isSubmitting={isSubmitting} />
           </div>
         </form>
       </div>
