@@ -6,7 +6,6 @@ import { AddForm } from "./Forms/AddForm";
 import { CgAdd } from "react-icons/cg";
 import { CgSearch } from "react-icons/cg";
 import { CgCalendarToday } from "react-icons/cg";
-import { CgCalendarDates } from "react-icons/cg";
 import { BiCalendarWeek } from "react-icons/bi";
 import { PiUsersThree } from "react-icons/pi";
 import { MenuLink } from "./UI/MenuLink";
@@ -21,7 +20,7 @@ export const Sidenav = () => {
   return (
     <>
       <div
-        className={`bg-opacity-35 md:border-none bg-neutral-100 relative min-h-screen min-w-72 pl-8 pr-4 py-3 flex flex-col gap-9`}
+        className={`md:border-none bg-neutral-100/40 relative min-h-screen min-w-72 pl-8 pr-4 py-3 flex flex-col gap-9`}
       >
         <ProfileIcon name="Oliver"></ProfileIcon>
         <div className="flex flex-col gap-1">

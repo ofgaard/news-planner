@@ -14,4 +14,9 @@ router.get("/:id", async (req, res) => {
   res.json(user);
 });
 
+router.get("/:id/stories", async (req, res) => {
+  const stories = await userController.getUserStories(req.params.id);
+  res.json(stories);
+});
+
 module.exports = router;

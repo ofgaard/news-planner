@@ -2,7 +2,7 @@ import { StoryTopic } from "../StoryTopic";
 import { Link } from "react-router";
 import { StoryListJournalists } from "../StoryListJournalists";
 import { StoryTimeOfCreation } from "../StoryTimeOfCreation";
-import { DeleteStory } from "../Buttons/DeleteStory";
+import { StoryDateOfCreation } from "../StoryDetails/StoryDateOfCreation";
 
 export const StoryCard = ({ story, onDelete, showDate }) => {
   if (story) {
@@ -19,7 +19,7 @@ export const StoryCard = ({ story, onDelete, showDate }) => {
           </div>
           <div className="flex flex-col gap-1 text-neutral-600">
             <StoryListJournalists story={story}></StoryListJournalists>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-col">
               <StoryTimeOfCreation time={story.createdAt}></StoryTimeOfCreation>
               {showDate && (
                 <StoryDateOfCreation

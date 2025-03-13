@@ -51,9 +51,27 @@ const createUser = async (userData) => {
   }
 };
 
+const getUserStories = async (userId) => {
+  try {
+    const stories = await prisma.story.findMany({
+      where: {
+        journalists: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
+    });
+    return stories;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getAllUsers,
   getUserById,
   getUserByEmail,
   createUser,
+  getUserStories,
 };

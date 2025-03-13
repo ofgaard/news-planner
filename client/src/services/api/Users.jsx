@@ -19,3 +19,13 @@ export const getUserById = async (id) => {
     console.log(err);
   }
 };
+
+export const getUserStories = async (id) => {
+  try {
+    const response = await fetch(`${URL}${id}/stories`);
+    const stories = response.json();
+    return stories;
+  } catch (err) {
+    console.log(err);
+  }
+};

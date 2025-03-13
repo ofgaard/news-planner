@@ -4,7 +4,7 @@ import { StoryCounter } from "../StoryCounter";
 
 export const WeekDay = ({ date, stories }) => {
   return (
-    <div className="border rounded-md flex flex-col gap-2 p-2 w-40">
+    <div className="border rounded-md hover:bg-neutral-200/20 flex flex-col gap-2 p-2 w-40">
       <div className="flex flex-col">
         <DayOfWeek textSize="text-sm" date={date}></DayOfWeek>
         <StoryCounter stories={stories}></StoryCounter>
