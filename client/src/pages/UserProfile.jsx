@@ -1,6 +1,9 @@
 import { useParams } from "react-router";
 import { useFetchUserById } from "../hooks/useFetchUserById";
 import { useFetchUserStories } from "../hooks/User/useFetchUserStories";
+import { Link } from "react-router";
+import { StoryDateOfCreation } from "../components/UI/StoryDetails/StoryDateOfCreation";
+import { StoryCounter } from "../components/UI/StoryCounter";
 
 export const UserProfile = () => {
   const { id } = useParams();
@@ -15,19 +18,38 @@ export const UserProfile = () => {
     <div className="flex flex-col p-10">
       <p className="font-extrabold text-xl">{user.name}</p>
       <p className="text-xs text-neutral-600">{user.role}</p>
-
-      <div className="mt-5 border min-h-52">
-        {storiesLoading ? (
-          <p>Loading ...</p>
-        ) : userStories.length > 0 ? (
-          <ul>
-            {userStories.map((story) => (
-              <li key={story.id}>{story.title}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No stories found</p>
-        )}
+      <div className="flex flex-col mt-15 gap-1">
+        <div>
+          <h1 className="text-neutral-600 font-bold text-sm">Stories</h1>
+          <StoryCounter stories={userStories}></StoryCounter>
+        </div>
+        <div className=" border max-w-md rounded-md min-h-52 p-2">
+          {storiesLoading ? (
+            <p>Loading ...</p>
+          ) : userStories.length > 0 ? (
+            <ul className="flex flex-col">
+              {userStories.map((story) => (
+                <Link
+                  className="hover:bg-neutral-300/20"
+                  key={story.id}
+                  to={`/story/${story.id}`}
+                >
+                  <div className="flex gap-1 items-center">
+                    <p className="font-bold">{story.title}</p>
+                    <p className="text-xs text-neutral-600">#{story.topic}</p>
+                    <div className="ml-auto">
+                      <StoryDateOfCreation
+                        date={story.createdAt}
+                      ></StoryDateOfCreation>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </ul>
+          ) : (
+            <p>No stories found</p>
+          )}
+        </div>
       </div>
     </div>
   );
