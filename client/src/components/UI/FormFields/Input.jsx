@@ -4,7 +4,7 @@ export const Input = ({ label, name, register, validation, type = "text" }) => (
     <input
       {...register(name, validation)}
       type={type}
-      className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="w-full p-2 border rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500"
     />
   </div>
 );

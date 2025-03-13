@@ -11,7 +11,7 @@ export const Select = ({
     <select
       {...register(name, validation)}
       onChange={onChange}
-      className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="w-full p-2 border rounded-md focus:outline-hidden focus:ring-2 focus:ring-blue-500"
     >
       <option value="">Select</option>
       {options.map((option) => (

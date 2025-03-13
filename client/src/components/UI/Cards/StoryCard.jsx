@@ -10,7 +10,7 @@ export const StoryCard = ({ story, onDelete, showDate }) => {
       <div className="flex">
         <Link
           key={story.id}
-          className="mb-5 max-w-3xl flex flex-col gap-2 border p-5 shadow-sm rounded-md hover:bg-neutral-50 w-full"
+          className="mb-5 max-w-3xl flex flex-col gap-2 border p-5 shadow-xs rounded-md hover:bg-neutral-50 w-full"
           to={`/story/${story.id}`}
         >
           <div className="flex justify-between">

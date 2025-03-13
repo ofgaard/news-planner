@@ -9,7 +9,7 @@ export const WeekDay = ({ date, stories }) => {
         <DayOfWeek textSize="text-sm" date={date}></DayOfWeek>
         <StoryCounter stories={stories}></StoryCounter>
       </div>
-      <div className="text-xs flex flex-col gap-2 flex-grow">
+      <div className="text-xs flex flex-col gap-2 grow">
         {stories.map((story) => (
           <Link key={story.id} to={`/story/${story.id}`}>
             <p className="hover:text-green-800">{story.title}</p>
