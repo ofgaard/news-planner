@@ -1,4 +1,4 @@
-export const FormSubmit = ({ isSubmitting, submitFunction }) => {
+export const FormSubmit = ({ isSubmitting, submitFunction, title }) => {
   return (
     <button
       disabled={isSubmitting}
@@ -6,7 +6,7 @@ export const FormSubmit = ({ isSubmitting, submitFunction }) => {
       type="submit"
       onClick={submitFunction}
     >
-      Save
+      {title || "Save"}
     </button>
   );
 };
