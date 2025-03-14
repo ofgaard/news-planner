@@ -12,6 +12,7 @@ export const DayOverview = () => {
   const { storiesByDate, setStoriesByDate, updateDate, loadingDailyStories } =
     useStories();
 
+  console.log(storiesByDate);
   const handleDelete = (id) => {
     setStoriesByDate((prevStories) =>
       prevStories.filter((story) => story.id !== id)
@@ -23,6 +24,10 @@ export const DayOverview = () => {
   }, [storiesDate, updateDate]);
 
   let storiesToRender = storiesByDate;
+
+  storiesToRender = storiesToRender.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   if (topic) {
     storiesToRender = storiesByDate.filter((story) => story.topic === topic);

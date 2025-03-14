@@ -7,17 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  EDITOR
-  JOURNALIST
-}
-
 model User {
   id       String        @id @default(uuid()) @map("id")
   name     String
   role     Role          @default(JOURNALIST)
-  stories  StoryOnUser[]
   comments Comment[]
+  stories  StoryOnUser[]
 
   @@map("users")
 }
@@ -26,14 +21,14 @@ model Story {
   id          Int           @id @default(autoincrement())
   title       String
   description String
-  journalists StoryOnUser[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  publishBy   DateTime?
   topic       String?
+  publishBy   DateTime?
+  topicId     Int?
   comments    Comment[]
   Topic       Topic?        @relation(fields: [topicId], references: [id])
-  topicId     Int?
+  journalists StoryOnUser[]
 
   @@index([publishBy])
   @@index([updatedAt])
@@ -42,8 +37,8 @@ model Story {
 model StoryOnUser {
   userId  String
   storyId Int
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   story   Story  @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, storyId])
 }
@@ -54,12 +49,17 @@ model Comment {
   createdAt DateTime @default(now())
   userId    String
   storyId   Int
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Topic {
   id    Int     @id @default(autoincrement())
   name  String
   story Story[]
+}
+
+enum Role {
+  EDITOR
+  JOURNALIST
 }

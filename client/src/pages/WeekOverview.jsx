@@ -30,7 +30,7 @@ export const WeekOverview = () => {
         </Link>
       </div>
 
-      <div className="flex flex-row gap-2 mt-20">
+      <div className="flex md:flex-row flex-col min-w-full gap-2 mt-20 flex-wrap">
         {stories.map((day, index) => (
           <WeekDay key={index} date={day.date} stories={day.stories}></WeekDay>
         ))}

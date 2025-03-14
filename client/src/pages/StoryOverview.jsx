@@ -10,6 +10,7 @@ import { EditStory } from "../components/Forms/EditStory";
 
 export const StoryOverview = () => {
   const { id } = useParams();
+
   const { story: initialStory } = useFetchStoryById(id);
   const [story, setStory] = useState(null);
   const [editMode, setEditMode] = useState({
