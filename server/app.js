@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   cors({
-    origin: "http://news-planner-qrvc85ihn-ofgaards-projects.vercel.app/",
+    origin: "*",
   })
 );
 
