@@ -10,8 +10,16 @@ export const UserProfile = () => {
   const { userStories, loading: storiesLoading } = useFetchUserStories(id);
   const { user, loading } = useFetchUserById(id);
 
-  if (!user) return <p>no user found</p>;
-  if (loading) return <p>loading</p>;
+  if (!user)
+    return (
+      <h1 className="flex flex-col justify-center items-center">
+        No users found...
+      </h1>
+    );
+  if (loading)
+    return (
+      <h1 className="flex flex-col justify-center items-center">Loading...</h1>
+    );
 
   console.log(user);
   return (

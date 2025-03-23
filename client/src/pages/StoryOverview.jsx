@@ -29,7 +29,9 @@ export const StoryOverview = () => {
   };
 
   if (!story) {
-    return <h1>Loading...</h1>;
+    return (
+      <h1 className="flex flex-col justify-center items-center">Loading...</h1>
+    );
   }
 
   return (
