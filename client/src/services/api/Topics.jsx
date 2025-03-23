@@ -1,4 +1,4 @@
-const URL = "http://localhost:3002/topics/";
+const URL = "https://news-planner.onrender.com/topics/";
 
 export const getTopics = async () => {
   try {

@@ -1,4 +1,4 @@
-const URL = "http://localhost:3002/users/";
+const URL = "https://news-planner.onrender.com/users/";
 
 export const getAllUsers = async () => {
   try {

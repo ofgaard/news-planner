@@ -1,4 +1,4 @@
-const URL = "http://localhost:3002/stories/";
+const URL = "https://news-planner.onrender.com/stories/";
 
 export const fetchStoriesByDate = async (
   date = new Date().toISOString().split("T")[0]
