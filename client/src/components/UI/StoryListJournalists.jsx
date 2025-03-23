@@ -7,7 +7,7 @@ export const StoryListJournalists = ({ story }) => {
         return (
           <div
             key={journalist.user.id}
-            className="flex flex-row gap-1 items-center justify-between"
+            className="flex flex-row gap-1 text-xs items-center justify-between"
           >
             <CgUser></CgUser>
             <p>{journalist.user.name}</p>{" "}

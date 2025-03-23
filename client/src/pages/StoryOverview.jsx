@@ -38,7 +38,7 @@ export const StoryOverview = () => {
     <div className="flex flex-col p-10 gap-1">
       <div className="flex items-center justify-between">
         <h1
-          className="text-4xl font-extrabold"
+          className="md:text-3xl font-extrabold max-w-[65%]"
           onClick={() => !editMode.title && toggleEditMode("title")}
         >
           {editMode.title ? (
