@@ -4,7 +4,7 @@ import { RouterProvider } from "react-router";
 import { router } from "./router";
 import { StoriesProvider } from "./context/StoryContext";
 
-import { AuthProvider } from "./context/AuthProvider";
+import { AuthProvider } from "./context/AuthContext";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(

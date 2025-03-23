@@ -1,8 +1,16 @@
-import { Navigate } from "react-router";
-import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
 
 export const ProtectedRoute = ({ children }) => {
   const { session } = useAuth();
+  const navigate = useNavigate();
 
-  return session ? children : <Navigate to="/login" />;
+  useEffect(() => {
+    if (!session) {
+      navigate("/login");
+    }
+  }, [session, navigate]);
+
+  return session ? children : null;
 };

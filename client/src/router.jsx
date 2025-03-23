@@ -8,7 +8,7 @@ import { UsersOverview } from "./pages/UsersOverview";
 import { UserProfile } from "./pages/UserProfile";
 import { Search } from "./pages/Search";
 import { Login } from "./pages/Login";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+// import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {

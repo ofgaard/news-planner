@@ -11,8 +11,10 @@ export const Layout = () => {
     setSidenavOpen((prev) => !prev);
   };
 
-  const closeSideNav = () => {
-    setSidenavOpen(false);
+  const closeSideNav = (e) => {
+    if (e.target.closest("a")) {
+      setSidenavOpen(false);
+    }
   };
 
   useEffect(() => {
