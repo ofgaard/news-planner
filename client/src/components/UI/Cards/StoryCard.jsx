@@ -14,7 +14,9 @@ export const StoryCard = ({ story, onDelete, showDate }) => {
           to={`/story/${story.id}`}
         >
           <div className="flex justify-between">
-            <h1 className="text-3xl font-extrabold">{story.title}</h1>
+            <h1 className="text-3xl font-extrabold max-w-[65%]">
+              {story.title}
+            </h1>
             <StoryTopic topic={story.topic}></StoryTopic>
           </div>
           <div className="flex flex-col gap-1 text-neutral-600">

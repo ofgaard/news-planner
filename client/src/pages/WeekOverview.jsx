@@ -11,9 +11,7 @@ export const WeekOverview = () => {
   console.log(stories);
 
   if (loading) {
-    return (
-      <h1 className="flex flex-col justify-center items-center">Loading...</h1>
-    );
+    return <h1 className="flex flex-col items-center mt-56">Loading...</h1>;
   }
 
   return (
